@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script src="../build/between.js" charset="utf-8"></script>
+    <script>
+      between(1, 10).time(1000).on('update', (value) => {
+        console.log(value);
+      }).on('complete', () => {
+        alert('complete!');
+      })
+    </script>
+  </body>
+</html>
