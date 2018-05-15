@@ -20,8 +20,9 @@
         <h5 class="demo">Demo &nbsp;&nbsp; <span onclick="window.location.reload()"><img height="16" src="./img/replay.png"></span></h5>
 
         <hr>
-        <h5 data-value>value: 0</h5>
+        <h5 data-value>value: 1, 5</h5>
         <h5 data-state>state: started</h5>
+        <h5 data-time>localTime[ms]: 0</h5>
       </div>
     </div>
 
@@ -29,9 +30,11 @@
     <script data-example-code>
       const value = document.querySelector('[data-value]');
       const state = document.querySelector('[data-state]');
+      const time = document.querySelector('[data-time]');
 
-      between(1, 10).time(1000).on('update', v => {
-        value.innerText = `value: ${v.toFixed(2)}`;
+      const a = between([1, 5], [10, 10]).time(5000).on('update', (v, {localTime}) => {
+        value.innerHTML = `value: &nbsp;&nbsp; [${v.map(a => a.toFixed(2)).join(',&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')}]`;
+        time.innerText = `localTime[ms]: ${localTime}`;
       }).on('start', () => {
         state.innerText = 'state: running';
       }).on('complete', () => {

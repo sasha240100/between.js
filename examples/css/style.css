@@ -1,0 +1,16 @@
+body[data-page="index"] {
+  padding: 120px 200px; }
+
+body[data-page="example"] {
+  padding: 80px 100px; }
+
+body[data-page="example"] pre code {
+  padding-left: 25px;
+  font-size: 10pt; }
+
+body[data-page="example"] .demo {
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding-top: 40px; }
+  body[data-page="example"] .demo span {
+    cursor: pointer; }

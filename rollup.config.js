@@ -18,10 +18,12 @@ export default {
     babel({
       exclude: 'node_modules/**'
     }),
-    serve({
-      open: true,
-      contentBase: ['./', './examples'],
-      port: 8080
-    })
+    ...(process.env.NODE_ENV === 'production' ? [] : [
+      serve({
+        open: true,
+        contentBase: ['./', './examples'],
+        port: 8080
+      })
+    ])
   ]
 }

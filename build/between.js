@@ -4,6 +4,20 @@
   (global.between = factory());
 }(this, (function () { 'use strict';
 
+  function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -24,6 +38,21 @@
     if (protoProps) _defineProperties(Constructor.prototype, protoProps);
     if (staticProps) _defineProperties(Constructor, staticProps);
     return Constructor;
+  }
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
   }
 
   function _inherits(subClass, superClass) {
@@ -133,29 +162,34 @@
     _delta = _time - _prevTime;
 
     for (var i = 0; i < _betweens.length; i++) {
-      if (!_betweens[i].completed) _betweens[i].update(_delta);
+      if (!_betweens[i][SYMBOL_COMPLETED]) _betweens[i].update(_delta);
     }
 
     _prevTime = _time;
   })();
 
+  var SYMBOL_TYPE = Symbol('type');
+  var SYMBOL_COMPLETED = Symbol('completed');
+
   var Between =
   /*#__PURE__*/
   function (_Events) {
     function Between(startValue, destValue) {
+      var _Object$assign;
+
       var _this;
 
       _classCallCheck(this, Between);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(Between).call(this));
-      Object.assign(_assertThisInitialized(_assertThisInitialized(_this)), {
+      var type = _typeof(startValue) === 'object' ? Array.isArray(startValue) ? 'array' : 'object' : 'number';
+      Object.assign(_assertThisInitialized(_assertThisInitialized(_this)), (_Object$assign = {
         duration: null,
         localTime: 0,
         startValue: startValue,
         destValue: destValue,
-        value: startValue,
-        completed: false
-      });
+        value: type === 'array' ? [].concat(startValue) : startValue
+      }, _defineProperty(_Object$assign, SYMBOL_COMPLETED, false), _defineProperty(_Object$assign, SYMBOL_TYPE, type), _Object$assign));
 
       _betweens.push(_assertThisInitialized(_assertThisInitialized(_this)));
 
@@ -171,15 +205,35 @@
     }, {
       key: "update",
       value: function update(delta) {
-        this.localTime += delta;
+        if (this.localTime === 0) this.emit('start');
         var progress = Math.min(1, this.localTime / this.duration);
-        this.value = lerp_1(this.startValue, this.destValue, progress);
-        this.emit('update', this.value);
+
+        switch (this[SYMBOL_TYPE]) {
+          case 'array':
+            for (var i = 0; i < this.value.length; i++) {
+              this.value[i] = lerp_1(this.startValue[i], this.destValue[i], progress);
+            }
+
+            break;
+
+          case 'object':
+            // FIXME: Unimplemented.
+            break;
+
+          case 'number':
+          default:
+            this.value = lerp_1(this.startValue, this.destValue, progress);
+            break;
+        }
+
+        this.emit('update', this.value, this);
 
         if (progress >= 1) {
-          this.completed = true;
+          this[SYMBOL_COMPLETED] = true;
           this.emit('complete');
         }
+
+        this.localTime += delta;
       }
     }]);
 

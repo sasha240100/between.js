@@ -1,12 +1,12 @@
 {
   "name": "between.js",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha.1",
   "description": "Interpolate between values",
-  "main": "index.js",
+  "main": "./build/between.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c",
-    "start": "rollup -c -w"
+    "build": "cross-env NODE_ENV=production rollup -c && gulp scss:build",
+    "start": "cross-env NODE_ENV=development gulp scss:watch & rollup -c -w"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,8 @@
     "tween",
     "tweening",
     "between",
-    "interpolate"
+    "interpolate",
+    "transition"
   ],
   "author": "Alexander Buzin",
   "license": "MIT",
@@ -29,6 +30,9 @@
     "@babel/core": "^7.0.0-beta.46",
     "@babel/preset-env": "^7.0.0-beta.46",
     "@babel/register": "^7.0.0-beta.46",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^4.0.1",
+    "node-sass": "^4.9.0",
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^4.0.0-beta.4",
     "rollup-plugin-commonjs": "^9.1.3",
