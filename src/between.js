@@ -44,14 +44,13 @@ class Between extends Events {
 
     const progress = Math.min(1, this.localTime / this.duration);
 
+    this.value = lerp(this.startValue, this.destValue, progress);
+    this.emit('update', this.value);
+
     if (progress >= 1) {
       this.completed = true;
       this.emit('complete');
     }
-
-    this.value = lerp(this.startValue, this.destValue, progress);
-
-    this.emit('update', this.value);
   }
 }
 
