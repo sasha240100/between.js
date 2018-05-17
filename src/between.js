@@ -32,7 +32,13 @@ class Between extends Events {
       localTime: 0,
       startValue,
       destValue,
-      value: type === 'array' ? [].concat(startValue) : startValue,
+      value: type === 'array'
+        ? [].concat(startValue)
+        : (
+          type === 'object'
+            ? Object.assign({}, startValue)
+            : startValue
+        ),
       [SYMBOL_COMPLETED]: false,
       [SYMBOL_TYPE]: type
     });
@@ -56,9 +62,12 @@ class Between extends Events {
         for (let i = 0; i < this.value.length; i++)
           this.value[i] = lerp(this.startValue[i], this.destValue[i], progress);
         break;
+
       case 'object':
-        // FIXME: Unimplemented.
+        for (const key in this.startValue) // eslint-disable-line
+          this.value[key] = lerp(this.startValue[key], this.destValue[key], progress);
         break;
+
       case 'number':
       default:
         this.value = lerp(this.startValue, this.destValue, progress);
