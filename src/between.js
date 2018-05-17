@@ -69,7 +69,7 @@ class Between extends Events {
 
     if (progress >= 1) {
       this[SYMBOL_COMPLETED] = true;
-      this.emit('complete');
+      this.emit('complete', this.value, this);
     }
 
     this.localTime += delta;

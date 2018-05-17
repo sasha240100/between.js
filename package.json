@@ -46,5 +46,8 @@
   "dependencies": {
     "lerp": "^1.0.3",
     "minivents": "^2.2.0"
+  },
+  "ava": {
+		"require": ["@babel/register"]
   }
 }
