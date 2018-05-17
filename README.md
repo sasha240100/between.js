@@ -1,4 +1,4 @@
-# between.js
+# between.js ![](https://travis-ci.org/sasha240100/between.js.svg?branch=master)
 
 ## Example
 
