@@ -4,7 +4,7 @@
   "description": "Interpolate between values",
   "main": "./build/between.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava test/*.spec.js --no-cache",
     "build": "cross-env NODE_ENV=production rollup -c && gulp scss:build",
     "start": "cross-env NODE_ENV=development gulp scss:watch & rollup -c -w"
   },
@@ -28,8 +28,10 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.46",
     "@babel/core": "^7.0.0-beta.46",
+    "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.47",
     "@babel/preset-env": "^7.0.0-beta.46",
     "@babel/register": "^7.0.0-beta.46",
+    "ava": "^1.0.0-beta.4",
     "gulp": "^3.9.1",
     "gulp-sass": "^4.0.1",
     "node-sass": "^4.9.0",
