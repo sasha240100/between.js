@@ -96,6 +96,7 @@
       "xo/filename-case": 0,
       "no-warning-comments": 0,
       "unicorn/filename-case": 0,
+      "unicorn/no-abusive-eslint-disable": 0,
       "import/no-unassigned-import": 0,
       "import/prefer-default-export": 0,
       "import/extensions": [
