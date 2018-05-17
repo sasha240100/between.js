@@ -3,6 +3,9 @@ import lerp from 'lerp';
 
 const _betweens = [];
 
+const SYMBOL_TYPE = Symbol('type');
+const SYMBOL_COMPLETED = Symbol('completed');
+
 let _prevTime = Date.now(), _time, _delta;
 (function _update() {
   requestAnimationFrame(_update);
@@ -17,9 +20,6 @@ let _prevTime = Date.now(), _time, _delta;
 
   _prevTime = _time;
 })();
-
-const SYMBOL_TYPE = Symbol('type');
-const SYMBOL_COMPLETED = Symbol('completed');
 
 class Between extends Events {
   constructor(startValue, destValue) {
