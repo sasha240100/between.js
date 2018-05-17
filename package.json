@@ -32,6 +32,7 @@
     "@babel/preset-env": "^7.0.0-beta.46",
     "@babel/register": "^7.0.0-beta.46",
     "ava": "^1.0.0-beta.4",
+    "cross-env": "^5.1.5",
     "gulp": "^3.9.1",
     "gulp-sass": "^4.0.1",
     "node-sass": "^4.9.0",
