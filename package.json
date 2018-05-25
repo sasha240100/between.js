@@ -5,7 +5,7 @@
   "main": "./build/between.js",
   "scripts": {
     "test": "xo ./src/**/*.js && ava test/*.spec.js --no-cache",
-    "coverage": "nyc npm test | coveralls",
+    "coverage": "nyc npm test && codecov",
     "build": "cross-env NODE_ENV=production rollup -c && gulp scss:build",
     "start": "cross-env NODE_ENV=development gulp scss:watch & rollup -c -w"
   },
@@ -34,7 +34,7 @@
     "@babel/register": "^7.0.0-beta.46",
     "ava": "^1.0.0-beta.4",
     "babel-plugin-istanbul": "^4.1.6",
-    "coveralls": "^3.0.1",
+    "codecov": "^3.0.2",
     "cross-env": "^5.1.5",
     "eslint-config-alexander_buzin": "^1.0.2",
     "gulp": "^3.9.1",

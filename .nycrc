@@ -6,6 +6,7 @@
     "src/**/*.js"
   ],
   "exclude": [
-    "test"
+    "test",
+    "src/**/.babelrc.js"
   ]
 }
