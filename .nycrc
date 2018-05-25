@@ -1,0 +1,11 @@
+{
+  "reporter": [
+    "text-lcov"
+  ],
+  "include": [
+    "src/**/*.js"
+  ],
+  "exclude": [
+    "test"
+  ]
+}

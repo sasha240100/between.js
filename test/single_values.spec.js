@@ -1,6 +1,6 @@
 import './polyfill';
 import test from 'ava';
-import between from '../src/between.js';
+import between from '../src/between';
 
 test.cb('single values', t => {
   t.plan(1);
@@ -8,7 +8,7 @@ test.cb('single values', t => {
   between(1, 2)
     .time(1000)
     .on('complete', v => {
-  	  t.is(v, 2);
+      t.is(v, 2);
       t.end();
     });
 });

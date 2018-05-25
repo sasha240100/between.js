@@ -5,5 +5,10 @@ module.exports = {
         node: 'current'
       }
     }]
-  ]
+  ],
+  env: {
+    test: {
+      plugins: ['istanbul']
+    }
+  }
 };

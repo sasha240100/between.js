@@ -151,6 +151,8 @@
   var lerp_1 = lerp;
 
   var _betweens = [];
+  var SYMBOL_TYPE = Symbol('type');
+  var SYMBOL_COMPLETED = Symbol('completed');
 
   var _prevTime = Date.now(),
       _time,
@@ -167,9 +169,6 @@
 
     _prevTime = _time;
   })();
-
-  var SYMBOL_TYPE = Symbol('type');
-  var SYMBOL_COMPLETED = Symbol('completed');
 
   var Between =
   /*#__PURE__*/
@@ -188,7 +187,7 @@
         localTime: 0,
         startValue: startValue,
         destValue: destValue,
-        value: type === 'array' ? [].concat(startValue) : startValue
+        value: type === 'array' ? [].concat(startValue) : type === 'object' ? Object.assign({}, startValue) : startValue
       }, _defineProperty(_Object$assign, SYMBOL_COMPLETED, false), _defineProperty(_Object$assign, SYMBOL_TYPE, type), _Object$assign));
 
       _betweens.push(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -217,7 +216,11 @@
             break;
 
           case 'object':
-            // FIXME: Unimplemented.
+            for (var key in this.startValue) {
+              // eslint-disable-line
+              this.value[key] = lerp_1(this.startValue[key], this.destValue[key], progress);
+            }
+
             break;
 
           case 'number':
@@ -230,7 +233,7 @@
 
         if (progress >= 1) {
           this[SYMBOL_COMPLETED] = true;
-          this.emit('complete');
+          this.emit('complete', this.value, this);
         }
 
         this.localTime += delta;
