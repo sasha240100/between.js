@@ -10,3 +10,8 @@ script:
 
 after_success:
   - npm run coverage
+
+deploy:
+  provider: surge
+  project: ./
+  domain: betweenjs.surge.sh  
