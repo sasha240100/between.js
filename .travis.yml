@@ -14,4 +14,6 @@ after_success:
 deploy:
   provider: surge
   project: ./
-  domain: betweenjs.surge.sh  
+  domain: betweenjs.surge.sh
+  on:
+    all_branches: true
