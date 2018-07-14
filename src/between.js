@@ -63,7 +63,7 @@ class Between extends Events {
     if (this.localTime === 0)
       this.emit('start');
 
-    const progress = Math.min(1, this.localTime / this.duration);
+    const progress = this.ease(Math.min(1, this.localTime / this.duration));
 
     switch (this[SYMBOL_TYPE]) {
       case 'array':
@@ -93,6 +93,7 @@ class Between extends Events {
   }
 }
 
-export default function (...args) {
+export default function between(...args) {
   return new Between(...args);
 }
+between.ease = Easing;
