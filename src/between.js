@@ -1,5 +1,8 @@
 import Events from 'minivents';
 import lerp from 'lerp';
+import Easing from 'easing-functions';
+
+const QO = Easing.Quadratic.Out;
 
 const _betweens = [];
 
@@ -44,6 +47,11 @@ class Between extends Events {
     });
 
     _betweens.push(this);
+  }
+
+  easing(easing) {
+    this.ease = easing;
+    return this;
   }
 
   time(duration) {
