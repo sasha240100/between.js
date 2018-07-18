@@ -2,8 +2,6 @@ import Events from 'minivents';
 import lerp from 'lerp';
 import Easing from 'easing-functions';
 
-const QO = Easing.Quadratic.Out;
-
 const _betweens = [];
 
 const SYMBOL_TYPE = Symbol('type');
@@ -35,6 +33,7 @@ class Between extends Events {
       localTime: 0,
       startValue,
       destValue,
+      ease: x => x,
       value: type === 'array'
         ? [].concat(startValue)
         : (
