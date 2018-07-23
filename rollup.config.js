@@ -9,7 +9,7 @@ export default {
   output: {
     format: 'umd',
     file: './build/between.js',
-    name: 'between'
+    name: 'Between'
   },
 
   plugins: [

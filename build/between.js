@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.between = factory());
+  (global.Between = factory());
 }(this, (function () { 'use strict';
 
   function _typeof(obj) {
@@ -746,6 +746,17 @@
   var Between =
   /*#__PURE__*/
   function (_Events) {
+    _createClass(Between, null, [{
+      key: "between",
+      value: function between() {
+        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        return _construct(Between, args);
+      }
+    }]);
+
     function Between(startValue, destValue) {
       var _Object$assign;
 
@@ -756,7 +767,7 @@
       _this = _possibleConstructorReturn(this, _getPrototypeOf(Between).call(this));
       var type = _typeof(startValue) === 'object' ? Array.isArray(startValue) ? 'array' : 'object' : 'number';
       Object.assign(_assertThisInitialized(_assertThisInitialized(_this)), (_Object$assign = {
-        duration: null,
+        duration: 1000,
         localTime: 0,
         startValue: startValue,
         destValue: destValue,
@@ -826,16 +837,8 @@
 
     return Between;
   }(minivents_commonjs);
+  Between.Easing = easingFunctions;
 
-  function between() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _construct(Between, args);
-  }
-  between.Easing = easingFunctions;
-
-  return between;
+  return Between;
 
 })));

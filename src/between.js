@@ -22,14 +22,18 @@ let _prevTime = Date.now(), _time, _delta;
   _prevTime = _time;
 })();
 
-class Between extends Events {
+export default class Between extends Events {
+  static between(...args) {
+    return new Between(...args);
+  }
+
   constructor(startValue, destValue) {
     super();
 
     const type = typeof startValue === 'object' ? (Array.isArray(startValue) ? 'array' : 'object') : 'number';
 
     Object.assign(this, {
-      duration: null,
+      duration: 1000,
       localTime: 0,
       startValue,
       destValue,
@@ -92,8 +96,4 @@ class Between extends Events {
   }
 }
 
-export default function between(...args) {
-  return new Between(...args);
-}
-
-between.Easing = Easing;
+Between.Easing = Easing;

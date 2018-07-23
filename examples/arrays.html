@@ -32,7 +32,7 @@
       const state = document.querySelector('[data-state]');
       const time = document.querySelector('[data-time]');
 
-      const a = between([1, 5], [10, 10]).time(5000).on('update', (v, {localTime}) => {
+      const a = new Between([1, 5], [10, 10]).time(5000).on('update', (v, {localTime}) => {
         value.innerHTML = `value: &nbsp;&nbsp; [${v.map(a => a.toFixed(2)).join(',&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')}]`;
         time.innerText = `localTime[ms]: ${localTime}`;
       }).on('start', () => {
