@@ -1,5 +1,6 @@
 import Events from 'minivents';
 import lerp from 'lerp';
+import Easing from 'easing-functions';
 
 const _betweens = [];
 
@@ -32,6 +33,7 @@ class Between extends Events {
       localTime: 0,
       startValue,
       destValue,
+      ease: x => x,
       value: type === 'array'
         ? [].concat(startValue)
         : (
@@ -46,6 +48,11 @@ class Between extends Events {
     _betweens.push(this);
   }
 
+  easing(easing) {
+    this.ease = easing;
+    return this;
+  }
+
   time(duration) {
     this.duration = duration;
     return this;
@@ -55,7 +62,7 @@ class Between extends Events {
     if (this.localTime === 0)
       this.emit('start');
 
-    const progress = Math.min(1, this.localTime / this.duration);
+    const progress = this.ease(Math.min(1, this.localTime / this.duration));
 
     switch (this[SYMBOL_TYPE]) {
       case 'array':
@@ -85,6 +92,8 @@ class Between extends Events {
   }
 }
 
-export default function (...args) {
+export default function between(...args) {
   return new Between(...args);
 }
+
+between.Easing = Easing;
