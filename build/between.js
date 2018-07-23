@@ -723,7 +723,6 @@
   var easingFunctions_10 = easingFunctions.Back;
   var easingFunctions_11 = easingFunctions.Bounce;
 
-  var QO = easingFunctions.Quadratic.Out;
   var _betweens = [];
   var SYMBOL_TYPE = Symbol('type');
   var SYMBOL_COMPLETED = Symbol('completed');
@@ -761,6 +760,9 @@
         localTime: 0,
         startValue: startValue,
         destValue: destValue,
+        ease: function ease(x) {
+          return x;
+        },
         value: type === 'array' ? [].concat(startValue) : type === 'object' ? Object.assign({}, startValue) : startValue
       }, _defineProperty(_Object$assign, SYMBOL_COMPLETED, false), _defineProperty(_Object$assign, SYMBOL_TYPE, type), _Object$assign));
 
@@ -832,7 +834,7 @@
 
     return _construct(Between, args);
   }
-  between.ease = easingFunctions;
+  between.Easing = easingFunctions;
 
   return between;
 

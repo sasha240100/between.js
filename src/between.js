@@ -95,4 +95,5 @@ class Between extends Events {
 export default function between(...args) {
   return new Between(...args);
 }
-between.ease = Easing;
+
+between.Easing = Easing;
