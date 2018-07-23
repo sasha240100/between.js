@@ -5,7 +5,7 @@ import between from '../src/between';
 test.cb('is easing works', t => {
   t.plan(1);
 
-  const easingFunc = between.ease.Bounce.In;
+  const easingFunc = between.Easing.Bounce.In;
 
   between(0, 10)
     .time(1000)
