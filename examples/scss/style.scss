@@ -1,12 +1,16 @@
 body[data-page="index"] {
   & {
-    padding: 120px 200px;
+    padding: 120px 20%;
+  }
+
+  h6 {
+    padding-top: 20px;
   }
 }
 
 body[data-page="example"] {
   & {
-    padding: 80px 100px;
+    padding: 8vw 10vw;
   }
 
   pre code {
@@ -17,14 +21,10 @@ body[data-page="example"] {
   .demo {
     font-weight: bold;
     letter-spacing: 1px;
-    padding-top: 40px;
+    padding-top: 2vw;
 
     span {
       cursor: pointer;
-
-      // img {
-      //   vertical-align: middle;
-      // }
     }
   }
 }

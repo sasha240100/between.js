@@ -816,11 +816,11 @@
         var _this2 = this;
 
         var maxTimes = times;
-        this.times = 1;
+        this.times = 0;
         return {
           complete: function complete(callback) {
             _this2.localTime = 0;
-            if (Number.isInteger(maxTimes) && _this2.times++ === maxTimes) callback();
+            if (Number.isInteger(maxTimes) && ++_this2.times === maxTimes) callback();else if (!Number.isInteger(maxTimes)) ++_this2.times;
           }
         };
       }
@@ -831,12 +831,12 @@
 
         var maxTimes = times;
         var bounceDirection = 1;
-        this.times = 1;
+        this.times = 0;
         return {
           complete: function complete(callback) {
             _this3.localTime = 0;
             bounceDirection = -bounceDirection;
-            if (Number.isInteger(maxTimes) && _this3.times++ === maxTimes) callback();
+            if (Number.isInteger(maxTimes) && ++_this3.times === maxTimes) callback();else if (!Number.isInteger(maxTimes)) ++_this3.times;
           },
           progress: function progress(x) {
             return bounceDirection > 0 ? x : 1 - x;
@@ -878,6 +878,8 @@
         if (this.localTime >= this.duration) {
           this.loopFunction.complete(function () {
             _this4[SYMBOL_COMPLETED] = true;
+
+            _this4.emit('update', _this4.value, _this4, delta);
 
             _this4.emit('complete', _this4.value, _this4);
           });

@@ -83,14 +83,16 @@ export default class Between extends Events {
 
   __loop_repeat(times) {
     const maxTimes = times;
-    this.times = 1;
+    this.times = 0;
 
     return {
       complete: callback => {
         this.localTime = 0;
 
-        if (Number.isInteger(maxTimes) && this.times++ === maxTimes)
+        if (Number.isInteger(maxTimes) && ++this.times === maxTimes)
           callback();
+        else if (!Number.isInteger(maxTimes))
+          ++this.times;
       }
     };
   }
@@ -98,15 +100,17 @@ export default class Between extends Events {
   __loop_bounce(times) {
     const maxTimes = times;
     let bounceDirection = 1;
-    this.times = 1;
+    this.times = 0;
 
     return {
       complete: callback => {
         this.localTime = 0;
         bounceDirection = -bounceDirection;
 
-        if (Number.isInteger(maxTimes) && this.times++ === maxTimes)
+        if (Number.isInteger(maxTimes) && ++this.times === maxTimes)
           callback();
+        else if (!Number.isInteger(maxTimes))
+          ++this.times;
       },
       progress: x => bounceDirection > 0 ? x : 1 - x
     };
@@ -139,6 +143,7 @@ export default class Between extends Events {
     if (this.localTime >= this.duration) {
       this.loopFunction.complete(() => {
         this[SYMBOL_COMPLETED] = true;
+        this.emit('update', this.value, this, delta);
         this.emit('complete', this.value, this);
       });
     }
