@@ -45,6 +45,7 @@ export default class Between extends Events {
       startValue,
       destValue,
       loopMode: 'once',
+      loopFunction: Between.DEFAULT_LOOP,
       ease: x => x,
       value: type === 'array'
         ? [].concat(startValue)
@@ -114,7 +115,6 @@ export default class Between extends Events {
   update(delta) {
     if (this.localTime === 0)
       this.emit('start');
-
     const progress = this.ease(this.loopFunction.progress(Math.min(1, this.localTime / this.duration)));
 
     switch (this[SYMBOL_TYPE]) {
@@ -134,13 +134,14 @@ export default class Between extends Events {
         break;
     }
 
+    this.emit('update', this.value, this, delta);
+
     if (this.localTime >= this.duration) {
       this.loopFunction.complete(() => {
         this[SYMBOL_COMPLETED] = true;
         this.emit('complete', this.value, this);
       });
-    } else
-      this.emit('update', this.value, this, delta);
+    }
 
     this.localTime += delta;
   }

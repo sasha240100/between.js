@@ -1,11 +1,11 @@
 import './polyfill';
 import test from 'ava';
-import between from '../src/between';
+import Between from '../src/between';
 
 test.cb('array as a value', t => {
   t.plan(1);
 
-  between(
+  new Between(
     [1, 2], // from
     [3, 4] // to
   )

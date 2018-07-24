@@ -30,9 +30,11 @@
       const value = document.querySelector('[data-value]');
       const state = document.querySelector('[data-state]');
 
-      new Between(1, 10).time(5000).easing(Between.Easing.Cubic.InOut)
-        .on('update', v => {
-          value.innerText = `value: ${v.toFixed(2)}`;
+      new Between(1, 10).time(4000)
+        .easing(Between.Easing.Cubic.InOut)
+        .loop('bounce', 4)
+        .on('update', (v, {times}) => {
+          value.innerText = `value: ${v.toFixed(2)}, times: ${times}`;
         }).on('start', () => {
           state.innerText = 'state: running';
         }).on('complete', () => {

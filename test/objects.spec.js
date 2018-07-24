@@ -1,11 +1,11 @@
 import './polyfill';
 import test from 'ava';
-import between from '../src/between';
+import Between from '../src/between';
 
 test.cb('object as a value', t => {
   t.plan(1);
 
-  between(
+  new Between(
     {a: 2}, // from
     {a: 10} // to
   )

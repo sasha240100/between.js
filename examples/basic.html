@@ -30,8 +30,8 @@
       const value = document.querySelector('[data-value]');
       const state = document.querySelector('[data-state]');
 
-      new Between(1, 10).time(1000).on('update', (v, {count}) => {
-        value.innerText = `value: ${v.toFixed(2)}, times: ${count}`;
+      new Between(1, 10).time(1000).on('update', v => {
+        value.innerText = `value: ${v.toFixed(2)}`;
       }).on('start', () => {
         state.innerText = 'state: running';
       }).on('complete', () => {

@@ -773,6 +773,7 @@
         startValue: startValue,
         destValue: destValue,
         loopMode: 'once',
+        loopFunction: Between.DEFAULT_LOOP,
         ease: function ease(x) {
           return x;
         },
@@ -872,13 +873,15 @@
             break;
         }
 
+        this.emit('update', this.value, this, delta);
+
         if (this.localTime >= this.duration) {
           this.loopFunction.complete(function () {
             _this4[SYMBOL_COMPLETED] = true;
 
             _this4.emit('complete', _this4.value, _this4);
           });
-        } else this.emit('update', this.value, this, delta);
+        }
 
         this.localTime += delta;
       }
