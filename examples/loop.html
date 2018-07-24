@@ -30,13 +30,14 @@
       const value = document.querySelector('[data-value]');
       const state = document.querySelector('[data-state]');
 
-      new Between(1, 10).time(1000).on('update', (v, {count}) => {
-        value.innerText = `value: ${v.toFixed(2)}, times: ${count}`;
-      }).on('start', () => {
-        state.innerText = 'state: running';
-      }).on('complete', () => {
-        state.innerText = 'state: complete';
-      });
+      new Between(1, 10).time(4000).easing(Between.Easing.Cubic.InOut).loop('repeat', 3)
+        .on('update', (v, {times}) => {
+          value.innerText = `value: ${v.toFixed(2)}, times: ${times}`;
+        }).on('start', () => {
+          state.innerText = 'state: running';
+        }).on('complete', () => {
+          state.innerText = 'state: complete';
+        });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" charset="utf-8"></script>
     <script src="./js/script.js" charset="utf-8"></script>

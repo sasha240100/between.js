@@ -7,6 +7,9 @@ module.exports = {
       modules: false
     }]
   ],
+  plugins: [
+    '@babel/plugin-proposal-class-properties'
+  ],
   env: {
     test: {
       plugins: [

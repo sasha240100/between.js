@@ -14,10 +14,10 @@ export default {
 
   plugins: [
     resolve(),
-    commonjs(),
     babel({
       exclude: 'node_modules/**'
     }),
+    commonjs(),
     ...(process.env.NODE_ENV === 'production' ? [] : [
       serve({
         open: true,
