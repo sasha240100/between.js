@@ -819,10 +819,7 @@
         return {
           complete: function complete(callback) {
             _this2.localTime = 0;
-
-            if (Number.isInteger(maxTimes) && _this2.times++ === maxTimes) {
-              callback();
-            }
+            if (Number.isInteger(maxTimes) && _this2.times++ === maxTimes) callback();
           }
         };
       }
@@ -838,10 +835,7 @@
           complete: function complete(callback) {
             _this3.localTime = 0;
             bounceDirection = -bounceDirection;
-
-            if (Number.isInteger(maxTimes) && _this3.times++ === maxTimes) {
-              callback();
-            }
+            if (Number.isInteger(maxTimes) && _this3.times++ === maxTimes) callback();
           },
           progress: function progress(x) {
             return bounceDirection > 0 ? x : 1 - x;
@@ -884,9 +878,7 @@
 
             _this4.emit('complete', _this4.value, _this4);
           });
-        } else {
-          this.emit('update', this.value, this, delta);
-        }
+        } else this.emit('update', this.value, this, delta);
 
         this.localTime += delta;
       }

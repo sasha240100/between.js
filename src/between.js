@@ -25,10 +25,10 @@ let _prevTime = Date.now(), _time, _delta;
 export default class Between extends Events {
   static between(...args) {
     return new Between(...args);
-  };
+  }
 
   static DEFAULT_LOOP = {
-    complete: (cb) => cb(),
+    complete: cb => cb(),
     progress: x => x
   };
 
@@ -85,14 +85,13 @@ export default class Between extends Events {
     this.times = 1;
 
     return {
-      complete: (callback) => {
+      complete: callback => {
         this.localTime = 0;
 
-        if (Number.isInteger(maxTimes) && this.times++ === maxTimes) {
+        if (Number.isInteger(maxTimes) && this.times++ === maxTimes)
           callback();
-        }
       }
-    }
+    };
   }
 
   __loop_bounce(times) {
@@ -101,16 +100,15 @@ export default class Between extends Events {
     this.times = 1;
 
     return {
-      complete: (callback) => {
+      complete: callback => {
         this.localTime = 0;
         bounceDirection = -bounceDirection;
 
-        if (Number.isInteger(maxTimes) && this.times++ === maxTimes) {
+        if (Number.isInteger(maxTimes) && this.times++ === maxTimes)
           callback();
-        }
       },
-      progress: (x) => bounceDirection > 0 ? x : 1 - x
-    }
+      progress: x => bounceDirection > 0 ? x : 1 - x
+    };
   }
 
   update(delta) {
@@ -141,9 +139,8 @@ export default class Between extends Events {
         this[SYMBOL_COMPLETED] = true;
         this.emit('complete', this.value, this);
       });
-    } else {
+    } else
       this.emit('update', this.value, this, delta);
-    }
 
     this.localTime += delta;
   }
