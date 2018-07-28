@@ -1,7 +1,6 @@
 import Events from 'minivents';
 import lerp from 'lerp';
 import Easing from 'easing-functions';
-import Color from 'color';
 
 const _betweens = [];
 
@@ -31,19 +30,19 @@ export default class Between extends Events {
   constructor(startValue, destValue) {
     super();
 
-    const middleware = this.middleware = Object.values(Between._middleware).reduce((v, m) => {
+    const plugin = this.plugin = Object.values(Between._plugins).reduce((v, m) => {
       return v || (m && m.test && m.test(startValue) && m);
     }, false);
 
-    const type = (middleware && middleware.name) || (typeof startValue === 'object' ? (Array.isArray(startValue) ? 'array' : 'object') : 'number');
+    const type = (plugin && plugin.name) || (typeof startValue === 'object' ? (Array.isArray(startValue) ? 'array' : 'object') : 'number');
 
-    const result = middleware.initialize(startValue, destValue);
+    const result = plugin.initialize(startValue, destValue);
 
     startValue = result.startValue;
     destValue = result.destValue;
     this.data = result.data;
 
-    // const toInterpolate = this.middleware.interpolate(startValue, destValue, Math.min(1, 0 / 1000), data)
+    // const toInterpolate = this.plugins.interpolate(startValue, destValue, Math.min(1, 0 / 1000), data)
 
     Object.assign(this, {
       duration: 1000,
@@ -97,10 +96,8 @@ export default class Between extends Events {
         break;
 
       default:
-        this.value = this.middleware.interpolate(this.startValue, this.destValue, progress, this.data);
+        this.value = this.plugin.interpolate(this.startValue, this.destValue, progress, this.data);
     }
-
-    // console.log(this.value)
 
     this.emit('update', this.value, this);
 
@@ -114,34 +111,4 @@ export default class Between extends Events {
 }
 
 Between.Easing = Easing;
-Between._middleware = {};
-// middleware code
-Between._middleware.color = {
-  name: 'color',
-  test(startValue) { // rgb(255, 0, 0)
-    return startValue.indexOf('rgb') >= 0 || startValue.indexOf('#') >= 0 || startValue.indexOf('hsl') >= 0; // true
-  },
-  initialize(startValue, destValue) {
-    return {
-      data: {
-        format: (startValue.indexOf('rgba') >= 0 && 'rgba')
-         || (startValue.indexOf('rgb') >= 0 && 'rgb')
-         || (startValue.indexOf('#') >= 0 && 'hex')
-         || Color(startValue).model
-      },
-      startValue: Color(startValue).rgb(),
-      destValue: Color(destValue).rgb()
-    }
-  },
-
-  interpolate(startValue, destValue, progress, data) {
-    const r = lerp(startValue.color[0], destValue.color[0], progress);
-    const g = lerp(startValue.color[1], destValue.color[1], progress);
-    const b = lerp(startValue.color[2], destValue.color[2], progress);
-    const a = lerp(startValue.valpha, destValue.valpha, progress);
-
-    const color = Color.rgb(r, g, b, a)[data.format === 'rgba' ? 'rgb' : data.format]();
-
-    return typeof color === 'string' ? color : color.string();
-  }
-};
+Between._plugins = {};

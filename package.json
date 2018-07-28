@@ -34,6 +34,7 @@
     "@babel/register": "^7.0.0-beta.46",
     "ava": "^1.0.0-beta.4",
     "babel-plugin-istanbul": "^4.1.6",
+    "babel-preset-es2015": "^6.24.1",
     "codecov": "^3.0.2",
     "cross-env": "^5.1.5",
     "eslint-config-alexander_buzin": "^1.0.2",
