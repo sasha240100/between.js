@@ -122,64 +122,26 @@ Between._middleware.color = {
     return startValue.indexOf('rgb') >= 0 || startValue.indexOf('#') >= 0 || startValue.indexOf('hsl') >= 0; // true
   },
   initialize(startValue, destValue) {
-    if (Color(startValue).model === 'hsl') {
-      return {
-        data: {
-          format: Color(startValue).model
-        },
-        startValue: Color(startValue).hsl(),
-        destValue: Color(destValue).hsl()
-      }
-    } else {
-      if (startValue.indexOf('rgb') >= 0) {
-        if(Color(startValue).valpha != 1 || Color(destValue).valpha != 1) {
-          return {
-            data: {
-              format: 'rgba'
-            },
-            startValue: Color(startValue),
-            destValue: Color(destValue)
-          }
-        } else {
-          return {
-            data: {
-              format: 'rgb'
-            },
-            startValue: Color(startValue),
-            destValue: Color(destValue)
-          }
-        }
-      } else if (startValue.indexOf('#') >= 0) {
-        return {
-          data: {
-            format: 'hex'
-          },
-          startValue: Color(startValue).rgb(),
-          destValue: Color(destValue).rgb()
-        }
-      }
+    return {
+      data: {
+        format: (startValue.indexOf('rgba') >= 0 && 'rgba')
+         || (startValue.indexOf('rgb') >= 0 && 'rgb')
+         || (startValue.indexOf('#') >= 0 && 'hex')
+         || Color(startValue).model
+      },
+      startValue: Color(startValue).rgb(),
+      destValue: Color(destValue).rgb()
     }
   },
-  
+
   interpolate(startValue, destValue, progress, data) {
     const r = lerp(startValue.color[0], destValue.color[0], progress);
     const g = lerp(startValue.color[1], destValue.color[1], progress);
     const b = lerp(startValue.color[2], destValue.color[2], progress);
+    const a = lerp(startValue.valpha, destValue.valpha, progress);
 
-    if (data.format === 'rgba') {
-      const a = lerp(startValue.valpha, destValue.valpha, progress)
-      return `rgba(${r.toFixed()}, ${g.toFixed()}, ${b.toFixed()}, ${a})`
-    }
+    const color = Color.rgb(r, g, b, a)[data.format === 'rgba' ? 'rgb' : data.format]();
 
-    if (data.format === 'hex')
-      return Color(`rgb(${r.toFixed()}, ${g.toFixed()}, ${b.toFixed()})`).hex()
-
-    if (data.format === 'rgb')
-      return `rgb(${r.toFixed()}, ${g.toFixed()}, ${b.toFixed()})`
-
-    if (data.format === 'hsl')
-      return `hsl(${r.toFixed()}, ${g.toFixed()}%, ${b.toFixed()}%)`
-
-    return toReturnTwo.color;
+    return typeof color === 'string' ? color : color.string();
   }
 };

@@ -2812,58 +2812,21 @@
       return startValue.indexOf('rgb') >= 0 || startValue.indexOf('#') >= 0 || startValue.indexOf('hsl') >= 0; // true
     },
     initialize: function initialize(startValue, destValue) {
-      if (color(startValue).model === 'hsl') {
-        return {
-          data: {
-            format: color(startValue).model
-          },
-          startValue: color(startValue).hsl(),
-          destValue: color(destValue).hsl()
-        };
-      } else {
-        if (startValue.indexOf('rgb') >= 0) {
-          if (color(startValue).valpha != 1 || color(destValue).valpha != 1) {
-            return {
-              data: {
-                format: 'rgba'
-              },
-              startValue: color(startValue),
-              destValue: color(destValue)
-            };
-          } else {
-            return {
-              data: {
-                format: 'rgb'
-              },
-              startValue: color(startValue),
-              destValue: color(destValue)
-            };
-          }
-        } else if (startValue.indexOf('#') >= 0) {
-          return {
-            data: {
-              format: 'hex'
-            },
-            startValue: color(startValue).rgb(),
-            destValue: color(destValue).rgb()
-          };
-        }
-      }
+      return {
+        data: {
+          format: startValue.indexOf('rgba') >= 0 && 'rgba' || startValue.indexOf('rgb') >= 0 && 'rgb' || startValue.indexOf('#') >= 0 && 'hex' || color(startValue).model
+        },
+        startValue: color(startValue).rgb(),
+        destValue: color(destValue).rgb()
+      };
     },
     interpolate: function interpolate(startValue, destValue, progress, data) {
       var r = lerp_1(startValue.color[0], destValue.color[0], progress);
       var g = lerp_1(startValue.color[1], destValue.color[1], progress);
       var b = lerp_1(startValue.color[2], destValue.color[2], progress);
-
-      if (data.format === 'rgba') {
-        var a = lerp_1(startValue.valpha, destValue.valpha, progress);
-        return "rgba(".concat(r.toFixed(), ", ").concat(g.toFixed(), ", ").concat(b.toFixed(), ", ").concat(a, ")");
-      }
-
-      if (data.format === 'hex') return color("rgb(".concat(r.toFixed(), ", ").concat(g.toFixed(), ", ").concat(b.toFixed(), ")")).hex();
-      if (data.format === 'rgb') return "rgb(".concat(r.toFixed(), ", ").concat(g.toFixed(), ", ").concat(b.toFixed(), ")");
-      if (data.format === 'hsl') return "hsl(".concat(r.toFixed(), ", ").concat(g.toFixed(), "%, ").concat(b.toFixed(), "%)");
-      return toReturnTwo.color;
+      var a = lerp_1(startValue.valpha, destValue.valpha, progress);
+      var color$$1 = color.rgb(r, g, b, a)[data.format === 'rgba' ? 'rgb' : data.format]();
+      return typeof color$$1 === 'string' ? color$$1 : color$$1.string();
     }
   };
 

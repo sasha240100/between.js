@@ -30,7 +30,7 @@
       const value = document.querySelector('[data-value]');
       const state = document.querySelector('[data-state]');
 
-      new Between('rgba(255, 0, 0, 0)', '#5CBF54EE').time(1000).on('update', v => {
+      new Between('hsl(100, 50%, 50%)', 'rgba(255, 0, 0, 1)').time(1000).on('update', v => {
         console.log(v)
         value.innerText = `value: ${v}`;
       }).on('start', () => {
