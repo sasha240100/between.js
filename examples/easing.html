@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
     <link rel="stylesheet" href="./css/atom-one-light.css">
     <link rel="stylesheet" href="./css/style.css">
@@ -30,7 +31,7 @@
       const value = document.querySelector('[data-value]');
       const state = document.querySelector('[data-state]');
 
-      new Between(1, 10).time(1000).easing(Between.Easing.Cubic.InOut)
+      new Between(1, 10).time(5000).easing(Between.Easing.Cubic.InOut)
         .on('update', v => {
           value.innerText = `value: ${v.toFixed(2)}`;
         }).on('start', () => {

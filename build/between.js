@@ -765,12 +765,15 @@
       _classCallCheck(this, Between);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(Between).call(this));
+      _this.count = 0;
       var type = _typeof(startValue) === 'object' ? Array.isArray(startValue) ? 'array' : 'object' : 'number';
       Object.assign(_assertThisInitialized(_assertThisInitialized(_this)), (_Object$assign = {
         duration: 1000,
         localTime: 0,
         startValue: startValue,
         destValue: destValue,
+        loopMode: 'once',
+        loopFunction: Between.DEFAULT_LOOP,
         ease: function ease(x) {
           return x;
         },
@@ -795,10 +798,58 @@
         return this;
       }
     }, {
+      key: "loop",
+      value: function loop() {
+        var mode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'once';
+        var loopFunctionName = "__loop_".concat(mode);
+
+        for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+          args[_key2 - 1] = arguments[_key2];
+        }
+
+        this.loopFunction = loopFunctionName in this ? Object.assign({}, Between.DEFAULT_LOOP, this[loopFunctionName].apply(this, args)) : Between.DEFAULT_LOOP;
+        return this;
+      }
+    }, {
+      key: "__loop_repeat",
+      value: function __loop_repeat(times) {
+        var _this2 = this;
+
+        var maxTimes = times;
+        this.times = 0;
+        return {
+          complete: function complete(callback) {
+            _this2.localTime = 0;
+            if (Number.isInteger(maxTimes) && ++_this2.times === maxTimes) callback();else if (!Number.isInteger(maxTimes)) ++_this2.times;
+          }
+        };
+      }
+    }, {
+      key: "__loop_bounce",
+      value: function __loop_bounce(times) {
+        var _this3 = this;
+
+        var maxTimes = times;
+        var bounceDirection = 1;
+        this.times = 0;
+        return {
+          complete: function complete(callback) {
+            _this3.localTime = 0;
+            bounceDirection = -bounceDirection;
+            if (Number.isInteger(maxTimes) && ++_this3.times === maxTimes) callback();else if (!Number.isInteger(maxTimes)) ++_this3.times;
+          },
+          progress: function progress(x) {
+            return bounceDirection > 0 ? x : 1 - x;
+          }
+        };
+      }
+    }, {
       key: "update",
       value: function update(delta) {
+        var _this4 = this;
+
         if (this.localTime === 0) this.emit('start');
-        var progress = this.ease(Math.min(1, this.localTime / this.duration));
+        var progress = this.ease(this.loopFunction.progress(Math.min(1, this.localTime / this.duration)));
 
         switch (this[SYMBOL_TYPE]) {
           case 'array':
@@ -822,11 +873,16 @@
             break;
         }
 
-        this.emit('update', this.value, this);
+        this.emit('update', this.value, this, delta);
 
-        if (progress >= 1) {
-          this[SYMBOL_COMPLETED] = true;
-          this.emit('complete', this.value, this);
+        if (this.localTime >= this.duration) {
+          this.loopFunction.complete(function () {
+            _this4[SYMBOL_COMPLETED] = true;
+
+            _this4.emit('update', _this4.value, _this4, delta);
+
+            _this4.emit('complete', _this4.value, _this4);
+          });
         }
 
         this.localTime += delta;
@@ -837,6 +893,15 @@
 
     return Between;
   }(minivents_commonjs);
+
+  _defineProperty(Between, "DEFAULT_LOOP", {
+    complete: function complete(cb) {
+      return cb();
+    },
+    progress: function progress(x) {
+      return x;
+    }
+  });
   Between.Easing = easingFunctions;
 
   return Between;

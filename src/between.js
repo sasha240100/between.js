@@ -27,8 +27,15 @@ export default class Between extends Events {
     return new Between(...args);
   }
 
+  static DEFAULT_LOOP = {
+    complete: cb => cb(),
+    progress: x => x
+  };
+
   constructor(startValue, destValue) {
     super();
+
+    this.count = 0;
 
     const type = typeof startValue === 'object' ? (Array.isArray(startValue) ? 'array' : 'object') : 'number';
 
@@ -37,6 +44,8 @@ export default class Between extends Events {
       localTime: 0,
       startValue,
       destValue,
+      loopMode: 'once',
+      loopFunction: Between.DEFAULT_LOOP,
       ease: x => x,
       value: type === 'array'
         ? [].concat(startValue)
@@ -62,11 +71,55 @@ export default class Between extends Events {
     return this;
   }
 
+  loop(mode = 'once', ...args) {
+    const loopFunctionName = `__loop_${mode}`;
+
+    this.loopFunction = loopFunctionName in this
+      ? Object.assign({}, Between.DEFAULT_LOOP, this[loopFunctionName](...args))
+      : Between.DEFAULT_LOOP;
+
+    return this;
+  }
+
+  __loop_repeat(times) {
+    const maxTimes = times;
+    this.times = 0;
+
+    return {
+      complete: callback => {
+        this.localTime = 0;
+
+        if (Number.isInteger(maxTimes) && ++this.times === maxTimes)
+          callback();
+        else if (!Number.isInteger(maxTimes))
+          ++this.times;
+      }
+    };
+  }
+
+  __loop_bounce(times) {
+    const maxTimes = times;
+    let bounceDirection = 1;
+    this.times = 0;
+
+    return {
+      complete: callback => {
+        this.localTime = 0;
+        bounceDirection = -bounceDirection;
+
+        if (Number.isInteger(maxTimes) && ++this.times === maxTimes)
+          callback();
+        else if (!Number.isInteger(maxTimes))
+          ++this.times;
+      },
+      progress: x => bounceDirection > 0 ? x : 1 - x
+    };
+  }
+
   update(delta) {
     if (this.localTime === 0)
       this.emit('start');
-
-    const progress = this.ease(Math.min(1, this.localTime / this.duration));
+    const progress = this.ease(this.loopFunction.progress(Math.min(1, this.localTime / this.duration)));
 
     switch (this[SYMBOL_TYPE]) {
       case 'array':
@@ -85,11 +138,14 @@ export default class Between extends Events {
         break;
     }
 
-    this.emit('update', this.value, this);
+    this.emit('update', this.value, this, delta);
 
-    if (progress >= 1) {
-      this[SYMBOL_COMPLETED] = true;
-      this.emit('complete', this.value, this);
+    if (this.localTime >= this.duration) {
+      this.loopFunction.complete(() => {
+        this[SYMBOL_COMPLETED] = true;
+        this.emit('update', this.value, this, delta);
+        this.emit('complete', this.value, this);
+      });
     }
 
     this.localTime += delta;

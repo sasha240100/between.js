@@ -29,6 +29,7 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.46",
     "@babel/core": "^7.0.0-beta.46",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.47",
     "@babel/plugin-transform-modules-commonjs": "^7.0.0-beta.47",
     "@babel/preset-env": "^7.0.0-beta.46",
     "@babel/register": "^7.0.0-beta.46",
@@ -41,6 +42,7 @@
     "gulp-sass": "^4.0.1",
     "node-sass": "^4.9.0",
     "nyc": "^11.8.0",
+    "once": "^1.4.0",
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^4.0.0-beta.4",
     "rollup-plugin-commonjs": "^9.1.3",
