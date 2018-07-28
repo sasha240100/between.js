@@ -50,6 +50,7 @@
     "xo": "^0.21.0"
   },
   "dependencies": {
+    "color": "^3.0.0",
     "easing-functions": "^1.0.1",
     "lerp": "^1.0.3",
     "minivents": "^2.2.0"
