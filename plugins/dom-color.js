@@ -1,11 +1,15 @@
 import Color from 'color';
+import colorString from 'color-string';
 import lerp from 'lerp';
 import Between from '../src/between';
 
 export default {
   name: 'color',
   test(startValue) { // rgb(255, 0, 0)
-    return startValue.indexOf('rgb') >= 0 || startValue.indexOf('#') >= 0 || startValue.indexOf('hsl') >= 0; // true
+    return startValue.indexOf('rgb') >= 0
+      || startValue.indexOf('#') >= 0
+      || startValue.indexOf('hsl') >= 0
+      || (typeof startValue === 'string' && colorString.get.rgb(startValue)); // true
   },
   initialize(startValue, destValue) {
     return {

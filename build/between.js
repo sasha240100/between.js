@@ -891,8 +891,6 @@
           this.loopFunction.complete(function () {
             _this4[SYMBOL_COMPLETED] = true;
 
-            _this4.emit('update', _this4.value, _this4, delta);
-
             _this4.emit('complete', _this4.value, _this4);
           });
         }

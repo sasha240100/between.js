@@ -1973,7 +1973,7 @@
 	  name: 'color',
 	  test: function test(startValue) {
 	    // rgb(255, 0, 0)
-	    return startValue.indexOf('rgb') >= 0 || startValue.indexOf('#') >= 0 || startValue.indexOf('hsl') >= 0; // true
+	    return startValue.indexOf('rgb') >= 0 || startValue.indexOf('#') >= 0 || startValue.indexOf('hsl') >= 0 || typeof startValue === 'string' && colorString.get.rgb(startValue); // true
 	  },
 	  initialize: function initialize(startValue, destValue) {
 	    return {

@@ -159,7 +159,6 @@ export default class Between extends Events {
     if (this.localTime >= this.duration) {
       this.loopFunction.complete(() => {
         this[SYMBOL_COMPLETED] = true;
-        this.emit('update', this.value, this, delta);
         this.emit('complete', this.value, this);
       });
     }
