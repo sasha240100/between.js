@@ -162,7 +162,7 @@ new Between(1, 10).time(4000)
 
 [Codepen](http://g.com)
 
-![](.gitbook/assets/screen-shot-2018-07-29-at-13.25.52.png)
+<img src=".gitbook/assets/screen-shot-2018-07-29-at-13.25.52.png" height="400">
 
 [easing-functions npm](https://www.npmjs.com/package/easing-functions) 
 
