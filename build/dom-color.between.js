@@ -1,8 +1,10 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(factory());
-}(this, (function () { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('between')) :
+	typeof define === 'function' && define.amd ? define(['between'], factory) :
+	(global.Between = global.Between || {}, global.Between._plugins = global.Between._plugins || {}, global.Between._plugins.color = factory(null));
+}(this, (function (between) { 'use strict';
+
+	between = between && between.hasOwnProperty('default') ? between['default'] : between;
 
 	function createCommonjsModule(fn, module) {
 		return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -1962,7 +1964,12 @@
 
 	var color = Color;
 
-	Between._plugins.color = {
+	function lerp(v0, v1, t) {
+	    return v0*(1-t)+v1*t
+	}
+	var lerp_1 = lerp;
+
+	var domColor = {
 	  name: 'color',
 	  test: function test(startValue) {
 	    // rgb(255, 0, 0)
@@ -1978,13 +1985,15 @@
 	    };
 	  },
 	  interpolate: function interpolate(startValue, destValue, progress, data) {
-	    var r = lerp(startValue.color[0], destValue.color[0], progress);
-	    var g = lerp(startValue.color[1], destValue.color[1], progress);
-	    var b = lerp(startValue.color[2], destValue.color[2], progress);
-	    var a = lerp(startValue.valpha, destValue.valpha, progress);
+	    var r = lerp_1(startValue.color[0], destValue.color[0], progress);
+	    var g = lerp_1(startValue.color[1], destValue.color[1], progress);
+	    var b = lerp_1(startValue.color[2], destValue.color[2], progress);
+	    var a = lerp_1(startValue.valpha, destValue.valpha, progress);
 	    var color$$1 = color.rgb(r, g, b, a)[data.format === 'rgba' ? 'rgb' : data.format]();
 	    return typeof color$$1 === 'string' ? color$$1 : color$$1.string();
 	  }
 	};
+
+	return domColor;
 
 })));

@@ -56,7 +56,8 @@
     "color": "^3.0.0",
     "easing-functions": "^1.0.1",
     "lerp": "^1.0.3",
-    "minivents": "^2.2.0"
+    "minivents": "^2.2.0",
+    "rollup-plugin-alias": "^1.4.0"
   },
   "ava": {
     "require": [

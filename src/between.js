@@ -1,3 +1,4 @@
+/* eslint no-multi-assign: 0 */
 import Events from 'minivents';
 import lerp from 'lerp';
 import Easing from 'easing-functions';
@@ -41,13 +42,12 @@ export default class Between extends Events {
 
     const type = (plugin && plugin.name) || (typeof startValue === 'object' ? (Array.isArray(startValue) ? 'array' : 'object') : 'number');
 
-    const result = plugin.initialize(startValue, destValue);
+    if (plugin) {
+      const result = plugin.initialize(startValue, destValue);
 
-    startValue = result.startValue;
-    destValue = result.destValue;
-    this.data = result.data;
-
-    // const toInterpolate = this.plugins.interpolate(startValue, destValue, Math.min(1, 0 / 1000), data)
+      ({startValue, destValue} = result);
+      this.data = result.data;
+    }
 
     Object.assign(this, {
       duration: 1000,
@@ -128,7 +128,8 @@ export default class Between extends Events {
 
   update(delta) {
     if (this.localTime === 0)
-      this.emit('start');
+      this.emit('start', this.value, this);
+
     const progress = this.ease(this.loopFunction.progress(Math.min(1, this.localTime / this.duration)));
 
     switch (this[SYMBOL_TYPE]) {
@@ -147,7 +148,10 @@ export default class Between extends Events {
         break;
 
       default:
-        this.value = this.plugin.interpolate(this.startValue, this.destValue, progress, this.data);
+        if (this.plugin)
+          this.value = this.plugin.interpolate(this.startValue, this.destValue, progress, this.data);
+        else
+          console.warn('Between: startValue type was unrecognized.');
     }
 
     this.emit('update', this.value, this, delta);

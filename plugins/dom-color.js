@@ -1,7 +1,8 @@
 import Color from 'color';
+import lerp from 'lerp';
+import Between from '../src/between';
 
-// plugins code
-Between._plugins.color = {
+export default {
   name: 'color',
   test(startValue) { // rgb(255, 0, 0)
     return startValue.indexOf('rgb') >= 0 || startValue.indexOf('#') >= 0 || startValue.indexOf('hsl') >= 0; // true

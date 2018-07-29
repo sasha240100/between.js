@@ -20,19 +20,20 @@
         <h5 class="demo">Demo &nbsp;&nbsp; <span onclick="window.location.reload()"><img height="16" src="./img/replay.png"></span></h5>
 
         <hr>
-        <h5 data-value>value: 0</h5>
+        <h5 data-value>Color: 0</h5>
         <h5 data-state>state: started</h5>
       </div>
     </div>
 
     <script src="../build/between.js" charset="utf-8"></script>
+    <script src="../build/dom-color.between.js" charset="utf-8"></script>
     <script data-example-code>
       const value = document.querySelector('[data-value]');
       const state = document.querySelector('[data-state]');
 
-      new Between('hsl(100, 50%, 50%)', 'rgba(255, 0, 0, 1)').time(1000).on('update', v => {
-        console.log(v)
-        value.innerText = `value: ${v}`;
+      new Between('#00ff00', 'rgba(255, 0, 0, 1)').time(1000).on('update', v => {
+        value.innerText = `Color: ${v}`;
+        value.style.color = v;
       }).on('start', () => {
         state.innerText = 'state: running';
       }).on('complete', () => {
