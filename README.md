@@ -27,7 +27,7 @@ $ npm install between.js
 ## Basic usage
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 
 new Between(1, 10).time(1000)
   .on('update', (value) => {
@@ -35,12 +35,25 @@ new Between(1, 10).time(1000)
   });
 ```
 
+
+Or in HTML:
+
+```html
+<script src="./path/to/between.js"></script>
+<script>
+  new Between(1, 10).time(1000)
+    .on('update', (value) => {
+        console.log(value);
+    });
+</script>
+```
+
 [Codepen](http://google.com)
 
 ## Events
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 
 new Between(1, 10).time(1000)
   .on('update', (value) => {
@@ -63,7 +76,7 @@ new Between(1, 10).time(1000)
 Numbers
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 
 new Between(1, 10).time(1000)
   .on('update', (value) => {
@@ -76,7 +89,7 @@ new Between(1, 10).time(1000)
 Arrays
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 
 new Between([1, 5], [10, 10]).time(1000)
   .on('update', (value) => {
@@ -89,7 +102,7 @@ new Between([1, 5], [10, 10]).time(1000)
 Objects
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 
 new Between({x: 2, y: 3, z: 4}, {x: 4, y: 6, z: 10}).time(1000)
   .on('update', (value) => {
@@ -104,7 +117,7 @@ new Between({x: 2, y: 3, z: 4}, {x: 4, y: 6, z: 10}).time(1000)
 Repeat `N` times
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 
 new Between(1, 10).time(4000)
   .loop('repeat', N)
@@ -119,7 +132,7 @@ new Between(1, 10).time(4000)
 Repeat endless
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 
 new Between(1, 10).time(4000)
   .loop('repeat')
@@ -133,7 +146,7 @@ new Between(1, 10).time(4000)
 Bounce `N` times
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 
 new Between(1, 10).time(4000)
   .loop('bounce', N)
@@ -148,7 +161,7 @@ new Between(1, 10).time(4000)
 ## Easing
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 import Easing from 'easing-functions';
 
 // choose easing mode frome easing-functions
@@ -176,7 +189,8 @@ Color types:
 * Words \(red, yellow...\)
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
+import 'between.js/build/dom-color.between.js';
 
 new Between('red', 'rgb(255,40,30)').time(4000)
   .on('update', (value) => {
@@ -184,10 +198,17 @@ new Between('red', 'rgb(255,40,30)').time(4000)
   });
 ```
 
+Or in HTML:
+
+```html
+<script src="./path/to/between.js"></script>
+<script src="./path/to/dom-color.between.js"></script>
+```
+
 ## Mixed examples
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 import Easing from 'easing-functions';
 
 // choose easing mode frome easing-functions
@@ -201,7 +222,7 @@ new Between('red', 'rgb(255,40,30)').time(4000)
 ```
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 import Easing from 'easing-functions';
 
 // choose easing mode frome easing-functions
@@ -215,7 +236,7 @@ new Between(1, 10).time(4000)
 ```
 
 ```javascript
-import between from 'between.js';
+import Between from 'between.js';
 import Easing from 'easing-functions';
 
 // choose easing mode frome easing-functions
