@@ -1,8 +1,8 @@
 
 
-# between.js
+<img src="https://i.imgur.com/0R4B416.png" height="100">
 
-> Powerful JavaScript twening library.
+> Lightweight JavaScript (ES6) tweening library.
 
 * [Purpose](./#purpose)
 * [Installation](./#install-with-npm)
