@@ -4,15 +4,20 @@
 
 > Lightweight JavaScript (ES6) tweening library.
 
-* [Purpose](./#purpose)
-* [Installation](./#install-with-npm)
-* [Basic usage](./#basic-usage)
-* [Events](./#events)
-* [Different values](./#different-values)
-* [Looping](./#looping)
-* [Easing](./#easing)
-* [Color](./#color)
-* [Mixed examples](./#mixed-examples)
+**EXAMPLES**
+* [Examples collection](http://betweenjs.surge.sh/)
+
+**DOCUMENTATION**
+
+* [Purpose](#purpose)
+* [Installation](#install-with-npm)
+* [Basic usage](#basic-usage)
+* [Events](#events)
+* [Different values](#different-values)
+* [Looping](#looping)
+* [Easing](#easing)
+* [Color](#color)
+* [Mixed examples](#mixed-examples)
 
 ## Purpose
 
