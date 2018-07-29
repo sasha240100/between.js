@@ -84,8 +84,6 @@ new Between(1, 10).time(1000)
   });
 ```
 
-[Codepen](http://g.com)
-
 Arrays
 
 ```javascript
@@ -97,7 +95,6 @@ new Between([1, 5], [10, 10]).time(1000)
    });
 ```
 
-[Codepen](http://google.com)
 
 Objects
 
@@ -110,7 +107,6 @@ new Between({x: 2, y: 3, z: 4}, {x: 4, y: 6, z: 10}).time(1000)
   });
 ```
 
-[Codepen](http://google.com)
 
 ## Looping
 
@@ -127,7 +123,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
-[Codepen](http://g.com)
+
 
 Repeat endless
 
@@ -141,7 +137,6 @@ new Between(1, 10).time(4000)
   });
 ```
 
-[Codepen](http://g.com)
 
 Bounce `N` times
 
@@ -156,7 +151,6 @@ new Between(1, 10).time(4000)
   });
 ```
 
-[Codepen](http://h.com)
 
 ## Easing
 
@@ -173,7 +167,6 @@ new Between(1, 10).time(4000)
   });
 ```
 
-[Codepen](http://g.com)
 
 <img src=".gitbook/assets/screen-shot-2018-07-29-at-13.25.52.png" height="400">
 
