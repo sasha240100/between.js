@@ -1,8 +1,8 @@
----
-description: Powerful JavaScript twening library.
----
+
 
 # between.js
+
+> Powerful JavaScript twening library.
 
 * [Purpose](./#purpose)
 * [Installation](./#install-with-npm)
