@@ -765,8 +765,18 @@
       _classCallCheck(this, Between);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(Between).call(this));
-      _this.count = 0;
-      var type = _typeof(startValue) === 'object' ? Array.isArray(startValue) ? 'array' : 'object' : 'number';
+      var plugin = _this.plugin = Object.values(Between._plugins).reduce(function (v, m) {
+        return v || m && m.test && m.test(startValue) && m;
+      }, false);
+      var type = plugin && plugin.name || (_typeof(startValue) === 'object' ? Array.isArray(startValue) ? 'array' : 'object' : 'number');
+
+      if (plugin) {
+        var result = plugin.initialize(startValue, destValue);
+        startValue = result.startValue;
+        destValue = result.destValue;
+        _this.data = result.data;
+      }
+
       Object.assign(_assertThisInitialized(_assertThisInitialized(_this)), (_Object$assign = {
         duration: 1000,
         localTime: 0,
@@ -848,7 +858,7 @@
       value: function update(delta) {
         var _this4 = this;
 
-        if (this.localTime === 0) this.emit('start');
+        if (this.localTime === 0) this.emit('start', this.value, this);
         var progress = this.ease(this.loopFunction.progress(Math.min(1, this.localTime / this.duration)));
 
         switch (this[SYMBOL_TYPE]) {
@@ -868,9 +878,11 @@
             break;
 
           case 'number':
-          default:
             this.value = lerp_1(this.startValue, this.destValue, progress);
             break;
+
+          default:
+            if (this.plugin) this.value = this.plugin.interpolate(this.startValue, this.destValue, progress, this.data);else console.warn('Between: startValue type was unrecognized.');
         }
 
         this.emit('update', this.value, this, delta);
@@ -878,8 +890,6 @@
         if (this.localTime >= this.duration) {
           this.loopFunction.complete(function () {
             _this4[SYMBOL_COMPLETED] = true;
-
-            _this4.emit('update', _this4.value, _this4, delta);
 
             _this4.emit('complete', _this4.value, _this4);
           });
@@ -903,6 +913,7 @@
     }
   });
   Between.Easing = easingFunctions;
+  Between._plugins = {};
 
   return Between;
 

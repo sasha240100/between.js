@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="./css/atom-one-light.css">
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body data-page="example">
+    <div class="row">
+      <div class="one-half column">
+        <h5><a href="/">All examples</a></h5>
+        <p>In this example...</p>
+        <pre>
+          <code class="javascript" data-example-hljs></code>
+        </pre>
+      </div>
+      <div class="one-half column">
+        <h5 class="demo">Demo &nbsp;&nbsp; <span onclick="window.location.reload()"><img height="16" src="./img/replay.png"></span></h5>
+
+        <hr>
+        <h5 data-value>Color: 0</h5>
+        <h5 data-state>state: started</h5>
+      </div>
+    </div>
+
+    <script src="../build/between.js" charset="utf-8"></script>
+    <script src="../build/dom-color.between.js" charset="utf-8"></script>
+    <script data-example-code>
+      const value = document.querySelector('[data-value]');
+      const state = document.querySelector('[data-state]');
+
+      new Between('white', 'rgb(255, 0, 0)').time(1000).on('update', v => {
+        value.innerText = `Color: ${v}`;
+        value.style.color = v;
+      }).on('start', () => {
+        state.innerText = 'state: running';
+      }).on('complete', () => {
+        state.innerText = 'state: complete';
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" charset="utf-8"></script>
+    <script src="./js/script.js" charset="utf-8"></script>
+  </body>
+</html>

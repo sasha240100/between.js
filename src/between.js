@@ -1,3 +1,4 @@
+/* eslint no-multi-assign: 0 */
 import Events from 'minivents';
 import lerp from 'lerp';
 import Easing from 'easing-functions';
@@ -35,9 +36,18 @@ export default class Between extends Events {
   constructor(startValue, destValue) {
     super();
 
-    this.count = 0;
+    const plugin = this.plugin = Object.values(Between._plugins).reduce((v, m) => {
+      return v || (m && m.test && m.test(startValue) && m);
+    }, false);
 
-    const type = typeof startValue === 'object' ? (Array.isArray(startValue) ? 'array' : 'object') : 'number';
+    const type = (plugin && plugin.name) || (typeof startValue === 'object' ? (Array.isArray(startValue) ? 'array' : 'object') : 'number');
+
+    if (plugin) {
+      const result = plugin.initialize(startValue, destValue);
+
+      ({startValue, destValue} = result);
+      this.data = result.data;
+    }
 
     Object.assign(this, {
       duration: 1000,
@@ -118,7 +128,8 @@ export default class Between extends Events {
 
   update(delta) {
     if (this.localTime === 0)
-      this.emit('start');
+      this.emit('start', this.value, this);
+
     const progress = this.ease(this.loopFunction.progress(Math.min(1, this.localTime / this.duration)));
 
     switch (this[SYMBOL_TYPE]) {
@@ -133,9 +144,14 @@ export default class Between extends Events {
         break;
 
       case 'number':
-      default:
         this.value = lerp(this.startValue, this.destValue, progress);
         break;
+
+      default:
+        if (this.plugin)
+          this.value = this.plugin.interpolate(this.startValue, this.destValue, progress, this.data);
+        else
+          console.warn('Between: startValue type was unrecognized.');
     }
 
     this.emit('update', this.value, this, delta);
@@ -143,7 +159,6 @@ export default class Between extends Events {
     if (this.localTime >= this.duration) {
       this.loopFunction.complete(() => {
         this[SYMBOL_COMPLETED] = true;
-        this.emit('update', this.value, this, delta);
         this.emit('complete', this.value, this);
       });
     }
@@ -153,3 +168,4 @@ export default class Between extends Events {
 }
 
 Between.Easing = Easing;
+Between._plugins = {};
