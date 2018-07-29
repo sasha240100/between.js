@@ -2,6 +2,7 @@
 import Events from 'minivents';
 import lerp from 'lerp';
 import Easing from 'easing-functions';
+import raf from 'raf';
 
 const _betweens = [];
 
@@ -10,7 +11,7 @@ const SYMBOL_COMPLETED = Symbol('completed');
 
 let _prevTime = Date.now(), _time, _delta;
 (function _update() {
-  requestAnimationFrame(_update);
+  raf(_update);
 
   _time = Date.now();
   _delta = _time - _prevTime;

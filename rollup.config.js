@@ -3,6 +3,7 @@ import serve from 'rollup-plugin-serve';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import plugins from './rollup.plugins.config';
+import {uglify} from 'rollup-plugin-uglify';
 
 export default [
   {
@@ -11,7 +12,8 @@ export default [
     output: {
       format: 'umd',
       file: './build/between.js',
-      name: 'Between'
+      name: 'Between',
+      banner: `/* Between.js v${require('./package.json').version} */`
     },
 
     plugins: [
@@ -20,7 +22,20 @@ export default [
         exclude: 'node_modules/**'
       }),
       commonjs(),
-      ...(process.env.NODE_ENV === 'production' ? [] : [
+      ...(process.env.NODE_ENV === 'production' ? [
+        uglify({
+          output: {
+            comments(node, comment) {
+              const text = comment.value;
+              const type = comment.type;
+
+              if (type == "comment2") {
+                  return /Between\.js/i.test(text);
+              }
+            }
+          }
+        })
+      ] : [
         serve({
           open: true,
           contentBase: ['./', './examples'],

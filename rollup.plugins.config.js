@@ -3,6 +3,7 @@ import babel from 'rollup-plugin-babel';
 import alias from 'rollup-plugin-alias';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import {uglify} from 'rollup-plugin-uglify';
 
 export default {
   input: './plugins/dom-color.js',
@@ -29,6 +30,9 @@ export default {
     commonjs(),
     babel({
       exclude: 'node_modules/**'
-    })
+    }),
+    ...(process.env.NODE_ENV === 'production' ? [
+      uglify()
+    ] : [])
   ]
 };
