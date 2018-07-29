@@ -188,7 +188,9 @@ Color types:
 
 ```javascript
 import Between from 'between.js';
-import 'between.js/build/dom-color.between.js';
+import ColorPlugin from 'between.js/build/dom-color.between.js';
+
+Between._plugins.color = ColorPlugin;
 
 new Between('red', 'rgb(255,40,30)').time(4000)
   .on('update', (value) => {
