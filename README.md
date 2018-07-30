@@ -4,6 +4,9 @@
 
 > Lightweight JavaScript (ES6) tweening library.
 
+![](https://travis-ci.org/sasha240100/between.js.svg?branch=master)
+![](https://img.shields.io/npm/v/between.js.svg)
+
 **EXAMPLES**
 * [Examples collection](http://betweenjs.surge.sh/)
 
@@ -21,7 +24,14 @@
 
 ## Purpose
 
-Make twining usage convenient and powerful.
+Make tweening usage convenient and powerful. There are certain things that we were following while developed this library, we wanted to make it:
+
+- The most **lightweight** :snowflake: JS Tweening library.
+ > The library is only `8.3 Kb`
+- The most **performant** :zap: JS Tweening library. 
+ > It uses optimization patterns to speed up & smooth animation.
+- The most **modern** :gem: JS Tweening library
+ > The library is written in `ES6`, compiled to ES5 for global browsers support and provides `ES6 API`.
 
 ## Install with npm 
 
@@ -34,8 +44,9 @@ $ npm install between.js
 ```javascript
 import Between from 'between.js';
 
+// new Between(from, to).time(duration)
 new Between(1, 10).time(1000)
-  .on('update', (value) => {
+  .on('update', (value) => { // This callback is executed in every frame
       console.log(value);
   });
 ```
@@ -52,6 +63,24 @@ Or in HTML:
     });
 </script>
 ```
+
+# API
+
+```js
+// Constructor
+new Between(
+ [Number|Object|Array] from, 
+ [Number|Object|Array] to
+)
+
+// Methods
+  .time([Number] duration) // Set duration
+  .loop([String] mode, [?Number] repeatTimes) // Set loop mode, if "repeatTimes" is falsy, treats as "endless"
+  .easing([Function] easing) // Set easing function
+  .on([String] eventName, [Function] callback) // Add event listener
+```
+
+> There is no need to "start" the tween. It is executed immediately once it was created.
 
 ## Events
 
@@ -76,7 +105,7 @@ new Between(1, 10).time(1000)
 * Arrays
 * Objects
 
-Numbers
+**Numbers**
 
 ```javascript
 import Between from 'between.js';
@@ -87,7 +116,9 @@ new Between(1, 10).time(1000)
   });
 ```
 
-Arrays
+[Example](http://betweenjs.surge.sh/basic.html)
+
+**Arrays**
 
 ```javascript
 import Between from 'between.js';
@@ -98,8 +129,9 @@ new Between([1, 5], [10, 10]).time(1000)
    });
 ```
 
+[Example](http://betweenjs.surge.sh/arrays.html)
 
-Objects
+**Objects**
 
 ```javascript
 import Between from 'between.js';
@@ -110,6 +142,7 @@ new Between({x: 2, y: 3, z: 4}, {x: 4, y: 6, z: 10}).time(1000)
   });
 ```
 
+[Example](http://betweenjs.surge.sh/objects.html)
 
 ## Looping
 
@@ -126,7 +159,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
-
+[Example](http://betweenjs.surge.sh/loop-repeat.html)
 
 Repeat endless
 
@@ -140,6 +173,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
+[Example](http://betweenjs.surge.sh/loop-repeat.html)
 
 Bounce `N` times
 
@@ -154,6 +188,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
+[Example](http://betweenjs.surge.sh/loop-bounce.html)
 
 ## Easing
 
@@ -170,6 +205,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
+[Example](http://betweenjs.surge.sh/easing.html)
 
 <img src=".gitbook/assets/screen-shot-2018-07-29-at-13.25.52.png" height="400">
 
@@ -195,6 +231,8 @@ new Between('red', 'rgb(255,40,30)').time(4000)
       console.log(value);
   });
 ```
+
+[Example](http://betweenjs.surge.sh/color-plugin.html)
 
 Or in HTML:
 
