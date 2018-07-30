@@ -24,7 +24,7 @@
 
 ## Purpose
 
-Make twining usage convenient and powerful.
+Make tweening usage convenient and powerful.
 
 ## Install with npm 
 
