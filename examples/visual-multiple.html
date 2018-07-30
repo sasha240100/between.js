@@ -33,19 +33,24 @@
       const element = document.querySelector('#move');
       const state = document.querySelector('[data-state]');
 
-      window.onload = () => setTimeout(() => { // Wait for page loading
-        new Between({x: 0, y: 0, r: 0}, {x: 400, y: 30, r: 90})
+      const from = {x: 0, y: 0, r: 0};
+      const to = {x: 400, y: 30, r: 90};
+
+      function createTween() {
+        new Between(from, to)
           .time(2000)
           .easing(Between.Easing.Cubic.In)
           .on('update', v => {
-            element.style.transform = `translate(${v.x}px, ${v.y}px) rotate(${v.r}deg)`;
+            element.style.transform =
+              `translate(${v.x}px, ${v.y}px) rotate(${v.r}deg)`;
           }).on('start', () => {
             state.innerText = 'state: running';
           }).on('complete', () => {
             state.innerText = 'state: complete';
           });
-      }, 2000);
+      }
 
+      window.onload = () => setTimeout(createTween, 2000);
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" charset="utf-8"></script>
     <script src="./js/script.js" charset="utf-8"></script>

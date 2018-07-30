@@ -34,14 +34,25 @@
       const state = document.querySelector('[data-state]');
       const time = document.querySelector('[data-time]');
 
-      new Between({x: 2, y: 3, z: 4}, {x: 4, y: 6, z: 10}).time(5000).on('update', (v, {localTime}) => {
-        value.innerHTML = `value: &nbsp;&nbsp; {x: ${v.x.toFixed(2)}, y: ${v.y.toFixed(2)}, z: ${v.z.toFixed(2)}}`;
-        time.innerText = `localTime[ms]: ${localTime}`;
-      }).on('start', () => {
-        state.innerText = 'state: running';
-      }).on('complete', () => {
-        state.innerText = 'state: complete';
-      });
+      const from = {x: 2, y: 3, z: 4};
+      const to = {x: 4, y: 8, z: 12};
+
+      function createTween() {
+        new Between(from, to) // Create tween
+          .time(5000) // Set tween duration
+          .on('update', (v, {localTime}) => { // On update event
+            value.innerHTML =
+              `value: &nbsp;&nbsp; {x: ${v.x.toFixed(2)}, y: ${v.y.toFixed(2)}, z: ${v.z.toFixed(2)}}`;
+            time.innerText = `localTime[ms]: ${localTime}`;
+          }).on('start', () => { // On complete event
+            state.innerText = 'state: running';
+          }).on('complete', () => { // On start event
+            state.innerText = 'state: complete';
+          });
+      }
+
+      window.onload = () => setTimeout(createTween, 2000);
+      // Waiting for page loading
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" charset="utf-8"></script>
     <script src="./js/script.js" charset="utf-8"></script>
