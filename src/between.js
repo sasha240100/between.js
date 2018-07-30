@@ -17,7 +17,7 @@ const _requestAnimationFrame = ( // polyfill
 
 let _prevTime = Date.now(), _time, _delta;
 (function _update() {
-  raf(_update);
+  _requestAnimationFrame(_update);
 
   _time = Date.now();
   _delta = _time - _prevTime;
@@ -78,7 +78,10 @@ export default class Between extends Events {
 
     switch (this[SYMBOL_TYPE]) {
       case 'number':
-        this._updateValue = (progress) => this.value = lerp(this.startValue, this.destValue, progress);
+        this._updateValue = progress => {
+          this.value = lerp(this.startValue, this.destValue, progress);
+        };
+
         break;
 
       case 'array':
@@ -86,10 +89,10 @@ export default class Between extends Events {
           const _l = this.value.length;
           const {startValue: s, destValue: d, value: v} = this;
 
-          this._updateValue = (progress) =>  {
+          this._updateValue = progress => {
             for (let i = 0; i < _l; i++)
               v[i] = lerp(s[i], d[i], progress);
-          }
+          };
         }
 
         break;
@@ -101,27 +104,26 @@ export default class Between extends Events {
 
           const {startValue: s, destValue: d, value: v} = this;
 
-          this._updateValue = (progress) =>  {
+          this._updateValue = progress => {
             for (let i = 0; i < _l; i++) {
               const key = keys[i];
               v[key] = lerp(s[key], d[key], progress);
             }
-          }
+          };
         }
 
         break;
 
       default:
-        if (this.plugin)
-          this._updateValue = (progress) =>
+        if (this.plugin) {
+          this._updateValue = progress => {
             this.value = this.plugin.interpolate(this.startValue, this.destValue, progress, this.data);
-        else {
+          };
+        } else {
           console.warn('Between: startValue type was unrecognized.');
-          this._updateValue = (progress) => null;
+          this._updateValue = () => null;
         }
     }
-
-    console.log(this._updateValue);
 
     _betweens.push(this.update());
   }
@@ -182,7 +184,7 @@ export default class Between extends Events {
   }
 
   update = () => {
-    const {_updateValue, loopFunction} = this;
+    const {_updateValue} = this;
 
     return (delta, time) => {
       if (this.localTime === 0)
@@ -197,7 +199,7 @@ export default class Between extends Events {
       this.emit('update', this.value, this, delta);
 
       if (this.localTime >= this.duration) {
-        loopFunction.complete(() => {
+        this.loopFunction.complete(() => {
           this[SYMBOL_COMPLETED] = true;
           this.emit('complete', this.value, this);
         });
