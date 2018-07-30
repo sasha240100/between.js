@@ -4,6 +4,9 @@
 
 > Lightweight JavaScript (ES6) tweening library.
 
+![](https://travis-ci.org/sasha240100/between.js.svg?branch=master)
+![](https://img.shields.io/npm/v/between.js.svg)
+
 **EXAMPLES**
 * [Examples collection](http://betweenjs.surge.sh/)
 
