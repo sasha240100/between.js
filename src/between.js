@@ -7,7 +7,13 @@ import raf from 'raf';
 const _betweens = [];
 
 const SYMBOL_TYPE = Symbol('type');
+const SYMBOL_START_TIME = Symbol('start_time');
 const SYMBOL_COMPLETED = Symbol('completed');
+
+const _requestAnimationFrame = ( // polyfill
+  requestAnimationFrame
+  || raf
+);
 
 let _prevTime = Date.now(), _time, _delta;
 (function _update() {
@@ -18,7 +24,7 @@ let _prevTime = Date.now(), _time, _delta;
 
   for (let i = 0; i < _betweens.length; i++) {
     if (!_betweens[i][SYMBOL_COMPLETED])
-      _betweens[i].update(_delta);
+      _betweens[i].update(_delta, Date.now() - _betweens[i][SYMBOL_START_TIME]);
   }
 
   _prevTime = _time;
@@ -66,8 +72,51 @@ export default class Between extends Events {
             : startValue
         ),
       [SYMBOL_COMPLETED]: false,
-      [SYMBOL_TYPE]: type
+      [SYMBOL_TYPE]: type,
+      [SYMBOL_START_TIME]: Date.now()
     });
+
+    switch (this[SYMBOL_TYPE]) {
+      case 'number':
+        this._updateValue = (progress) => this.value = lerp(this.startValue, this.destValue, progress);
+        break;
+
+      case 'array':
+        const _l = this.value.length;
+
+        const {startValue: s, destValue: d, value: v} = this;
+
+        this._updateValue = (progress) =>  {
+          for (let i = 0; i < _l; i++)
+            v[i] = lerp(s[i], d[i], progress);
+        }
+
+        break;
+
+      case 'object':
+        const keys = Object.keys(this.startValue);
+        const _l = keys.length;
+
+        const {startValue: s, destValue: d, value: v} = this;
+
+        this._updateValue = (progress) =>  {
+          for (let i = 0; i < _l; i++) {
+            const key = keys[i];
+            v[key] = lerp(s[key], d[key], progress);
+          }
+        }
+
+        break;
+
+      default:
+        if (this.plugin)
+          this._updateValue = (progress) =>
+            this.value = this.plugin.interpolate(this.startValue, this.destValue, progress, this.data);
+        else {
+          console.warn('Between: startValue type was unrecognized.');
+          this._updateValue = (progress) => null;
+        }
+    }
 
     _betweens.push(this);
   }
@@ -127,45 +176,31 @@ export default class Between extends Events {
     };
   }
 
-  update(delta) {
-    if (this.localTime === 0)
-      this.emit('start', this.value, this);
+  update: function () {
+    const {_updateValue, loopFunction} = this;
 
-    const progress = this.ease(this.loopFunction.progress(Math.min(1, this.localTime / this.duration)));
+    return function (delta, time) {
+      if (this.localTime === 0)
+        this.emit('start', this.value, this);
 
-    switch (this[SYMBOL_TYPE]) {
-      case 'array':
-        for (let i = 0; i < this.value.length; i++)
-          this.value[i] = lerp(this.startValue[i], this.destValue[i], progress);
-        break;
+      _updateValue(this.ease( // progress
+        this.loopFunction.progress(
+          Math.min(1, (time || this.localTime) / this.duration)
+        )
+      ));
 
-      case 'object':
-        for (const key in this.startValue) // eslint-disable-line
-          this.value[key] = lerp(this.startValue[key], this.destValue[key], progress);
-        break;
+      this.emit('update', this.value, this, delta);
 
-      case 'number':
-        this.value = lerp(this.startValue, this.destValue, progress);
-        break;
+      if (this.localTime >= this.duration) {
+        loopFunction.complete(() => {
+          this[SYMBOL_COMPLETED] = true;
+          this.emit('complete', this.value, this);
+        });
+      }
 
-      default:
-        if (this.plugin)
-          this.value = this.plugin.interpolate(this.startValue, this.destValue, progress, this.data);
-        else
-          console.warn('Between: startValue type was unrecognized.');
-    }
-
-    this.emit('update', this.value, this, delta);
-
-    if (this.localTime >= this.duration) {
-      this.loopFunction.complete(() => {
-        this[SYMBOL_COMPLETED] = true;
-        this.emit('complete', this.value, this);
-      });
-    }
-
-    this.localTime += delta;
-  }
+      this.localTime += delta;
+    };
+  }()
 }
 
 Between.Easing = Easing;

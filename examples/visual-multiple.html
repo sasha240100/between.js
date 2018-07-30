@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="./css/atom-one-light.css">
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body data-page="example">
+    <div class="row">
+      <div class="one-half column">
+        <h5><a href="/">All examples</a></h5>
+        <p>In this example...</p>
+        <pre>
+          <code class="javascript" data-example-hljs></code>
+        </pre>
+      </div>
+      <div class="one-half column">
+        <h5 class="demo">Demo &nbsp;&nbsp; <span onclick="window.location.reload()"><img height="16" src="./img/replay.png"></span></h5>
+
+        <hr>
+        <div id="move" style="background: red; width: 20px; height: 20px;"></div>
+        <h5 data-state style="padding-top: 20px;">state: started</h5>
+      </div>
+    </div>
+
+    <script src="../build/between.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.2.0/Tween.min.js" charset="utf-8"></script>
+    <script data-example-code>
+      const element = document.querySelector('#move');
+      const state = document.querySelector('[data-state]');
+
+      window.onload = () => setTimeout(() => { // Wait for page loading
+        new Between({x: 0, y: 0, r: 0}, {x: 400, y: 30, r: 90})
+          .time(2000)
+          .easing(Between.Easing.Cubic.In)
+          .on('update', v => {
+            element.style.transform = `translate(${v.x}px, ${v.y}px) rotate(${v.r}deg)`;
+          }).on('start', () => {
+            state.innerText = 'state: running';
+          }).on('complete', () => {
+            state.innerText = 'state: complete';
+          });
+      }, 2000);
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" charset="utf-8"></script>
+    <script src="./js/script.js" charset="utf-8"></script>
+  </body>
+</html>
