@@ -24,7 +24,7 @@ let _prevTime = Date.now(), _time, _delta;
 
   for (let i = 0; i < _betweens.length; i++) {
     if (!_betweens[i][SYMBOL_COMPLETED])
-      _betweens[i].update(_delta, Date.now() - _betweens[i][SYMBOL_START_TIME]);
+      _betweens[i](_delta, Date.now() - _betweens[i][SYMBOL_START_TIME]);
   }
 
   _prevTime = _time;
@@ -82,27 +82,30 @@ export default class Between extends Events {
         break;
 
       case 'array':
-        const _l = this.value.length;
+        {
+          const _l = this.value.length;
+          const {startValue: s, destValue: d, value: v} = this;
 
-        const {startValue: s, destValue: d, value: v} = this;
-
-        this._updateValue = (progress) =>  {
-          for (let i = 0; i < _l; i++)
-            v[i] = lerp(s[i], d[i], progress);
+          this._updateValue = (progress) =>  {
+            for (let i = 0; i < _l; i++)
+              v[i] = lerp(s[i], d[i], progress);
+          }
         }
 
         break;
 
       case 'object':
-        const keys = Object.keys(this.startValue);
-        const _l = keys.length;
+        {
+          const keys = Object.keys(this.startValue);
+          const _l = keys.length;
 
-        const {startValue: s, destValue: d, value: v} = this;
+          const {startValue: s, destValue: d, value: v} = this;
 
-        this._updateValue = (progress) =>  {
-          for (let i = 0; i < _l; i++) {
-            const key = keys[i];
-            v[key] = lerp(s[key], d[key], progress);
+          this._updateValue = (progress) =>  {
+            for (let i = 0; i < _l; i++) {
+              const key = keys[i];
+              v[key] = lerp(s[key], d[key], progress);
+            }
           }
         }
 
@@ -118,7 +121,9 @@ export default class Between extends Events {
         }
     }
 
-    _betweens.push(this);
+    console.log(this._updateValue);
+
+    _betweens.push(this.update());
   }
 
   easing(easing) {
@@ -176,10 +181,10 @@ export default class Between extends Events {
     };
   }
 
-  update: function () {
+  update = () => {
     const {_updateValue, loopFunction} = this;
 
-    return function (delta, time) {
+    return (delta, time) => {
       if (this.localTime === 0)
         this.emit('start', this.value, this);
 
@@ -200,7 +205,7 @@ export default class Between extends Events {
 
       this.localTime += delta;
     };
-  }()
+  }
 }
 
 Between.Easing = Easing;

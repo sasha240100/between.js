@@ -857,7 +857,7 @@
     _delta = _time - _prevTime;
 
     for (var i = 0; i < _betweens.length; i++) {
-      if (!_betweens[i][SYMBOL_COMPLETED]) _betweens[i].update(_delta, Date.now() - _betweens[i][SYMBOL_START_TIME]);
+      if (!_betweens[i][SYMBOL_COMPLETED]) _betweens[i](_delta, Date.now() - _betweens[i][SYMBOL_START_TIME]);
     }
 
     _prevTime = _time;
@@ -885,6 +885,32 @@
       _classCallCheck(this, Between);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(Between).call(this));
+
+      _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "update", function () {
+        var _assertThisInitialize = _assertThisInitialized(_assertThisInitialized(_this)),
+            _updateValue = _assertThisInitialize._updateValue,
+            loopFunction = _assertThisInitialize.loopFunction;
+
+        return function (delta, time) {
+          if (_this.localTime === 0) _this.emit('start', _this.value, _assertThisInitialized(_assertThisInitialized(_this)));
+
+          _updateValue(_this.ease( // progress
+          _this.loopFunction.progress(Math.min(1, (time || _this.localTime) / _this.duration))));
+
+          _this.emit('update', _this.value, _assertThisInitialized(_assertThisInitialized(_this)), delta);
+
+          if (_this.localTime >= _this.duration) {
+            loopFunction.complete(function () {
+              _this[SYMBOL_COMPLETED] = true;
+
+              _this.emit('complete', _this.value, _assertThisInitialized(_assertThisInitialized(_this)));
+            });
+          }
+
+          _this.localTime += delta;
+        };
+      });
+
       var plugin = _this.plugin = Object.values(Between._plugins).reduce(function (v, m) {
         return v || m && m.test && m.test(startValue) && m;
       }, false);
@@ -919,25 +945,39 @@
           break;
 
         case 'array':
-          _this._updateValue = function (progress) {
-            for (var i = 0; i < _this.value.length; i++) {
-              _this.value[i] = lerp_1(_this.startValue[i], _this.destValue[i], progress);
-            }
-          };
+          {
+            var _l = _this.value.length;
 
+            var _assertThisInitialize2 = _assertThisInitialized(_assertThisInitialized(_this)),
+                s = _assertThisInitialize2.startValue,
+                d = _assertThisInitialize2.destValue,
+                v = _assertThisInitialize2.value;
+
+            _this._updateValue = function (progress) {
+              for (var i = 0; i < _l; i++) {
+                v[i] = lerp_1(s[i], d[i], progress);
+              }
+            };
+          }
           break;
 
         case 'object':
-          var keys = Object.keys(_this.startValue);
-          var _l = keys.length;
+          {
+            var keys = Object.keys(_this.startValue);
+            var _l2 = keys.length;
 
-          _this._updateValue = function (progress) {
-            for (var i = 0; i < _l; i++) {
-              var key = keys[i];
-              _this.value[key] = lerp_1(_this.startValue[key], _this.destValue[key], progress);
-            }
-          };
+            var _assertThisInitialize3 = _assertThisInitialized(_assertThisInitialized(_this)),
+                _s = _assertThisInitialize3.startValue,
+                _d = _assertThisInitialize3.destValue,
+                _v = _assertThisInitialize3.value;
 
+            _this._updateValue = function (progress) {
+              for (var i = 0; i < _l2; i++) {
+                var key = keys[i];
+                _v[key] = lerp_1(_s[key], _d[key], progress);
+              }
+            };
+          }
           break;
 
         default:
@@ -952,7 +992,9 @@
           }
       }
 
-      _betweens.push(_assertThisInitialized(_assertThisInitialized(_this)));
+      console.log(_this._updateValue);
+
+      _betweens.push(_this.update());
 
       return _this;
     }
@@ -1014,28 +1056,6 @@
             return bounceDirection > 0 ? x : 1 - x;
           }
         };
-      }
-    }, {
-      key: "update",
-      value: function update(delta, time) {
-        var _this4 = this;
-
-        if (this.localTime === 0) this.emit('start', this.value, this);
-        var progress = this.ease(this.loopFunction.progress(Math.min(1, (time || this.localTime) / this.duration)));
-
-        this._updateValue(progress);
-
-        this.emit('update', this.value, this, delta);
-
-        if (this.localTime >= this.duration) {
-          this.loopFunction.complete(function () {
-            _this4[SYMBOL_COMPLETED] = true;
-
-            _this4.emit('complete', _this4.value, _this4);
-          });
-        }
-
-        this.localTime += delta;
       }
     }]);
 
