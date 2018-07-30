@@ -53,8 +53,6 @@ Or in HTML:
 </script>
 ```
 
-[Codepen](http://google.com)
-
 ## Events
 
 ```javascript
