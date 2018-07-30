@@ -208,6 +208,9 @@ Or in HTML:
 ```javascript
 import Between from 'between.js';
 import Easing from 'easing-functions';
+import ColorPlugin from 'between.js/build/dom-color.between.js';
+
+Between._plugins.color = ColorPlugin;
 
 // choose easing mode frome easing-functions
 
