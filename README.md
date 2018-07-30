@@ -105,7 +105,7 @@ new Between(1, 10).time(1000)
 * Arrays
 * Objects
 
-Numbers
+**Numbers**
 
 ```javascript
 import Between from 'between.js';
@@ -116,7 +116,9 @@ new Between(1, 10).time(1000)
   });
 ```
 
-Arrays
+[Example](http://betweenjs.surge.sh/basic.html)
+
+**Arrays**
 
 ```javascript
 import Between from 'between.js';
@@ -127,8 +129,9 @@ new Between([1, 5], [10, 10]).time(1000)
    });
 ```
 
+[Example](http://betweenjs.surge.sh/arrays.html)
 
-Objects
+**Objects**
 
 ```javascript
 import Between from 'between.js';
@@ -139,6 +142,7 @@ new Between({x: 2, y: 3, z: 4}, {x: 4, y: 6, z: 10}).time(1000)
   });
 ```
 
+[Example](http://betweenjs.surge.sh/objects.html)
 
 ## Looping
 
@@ -155,7 +159,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
-
+[Example](http://betweenjs.surge.sh/loop-repeat.html)
 
 Repeat endless
 
@@ -169,6 +173,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
+[Example](http://betweenjs.surge.sh/loop-repeat.html)
 
 Bounce `N` times
 
@@ -183,6 +188,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
+[Example](http://betweenjs.surge.sh/loop-bounce.html)
 
 ## Easing
 
@@ -199,6 +205,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
+[Example](http://betweenjs.surge.sh/easing.html)
 
 <img src=".gitbook/assets/screen-shot-2018-07-29-at-13.25.52.png" height="400">
 
@@ -224,6 +231,8 @@ new Between('red', 'rgb(255,40,30)').time(4000)
       console.log(value);
   });
 ```
+
+[Example](http://betweenjs.surge.sh/color-plugin.html)
 
 Or in HTML:
 
