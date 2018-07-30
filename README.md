@@ -44,8 +44,9 @@ $ npm install between.js
 ```javascript
 import Between from 'between.js';
 
+// new Between(from, to).time(duration)
 new Between(1, 10).time(1000)
-  .on('update', (value) => {
+  .on('update', (value) => { // This callback is executed in every frame
       console.log(value);
   });
 ```
@@ -62,6 +63,24 @@ Or in HTML:
     });
 </script>
 ```
+
+# API
+
+```js
+// Constructor
+new Between(
+ [Number|Object|Array] from, 
+ [Number|Object|Array] to
+)
+
+// Methods
+  .time([Number] duration) // Set duration
+  .loop([String] mode, [?Number] repeatTimes) // Set loop mode, if "repeatTimes" is falsy, treats as "endless"
+  .easing([Function] easing) // Set easing function
+  .on([String] eventName, [Function] callback) // Add event listener
+```
+
+> There is no need to "start" the tween. It is executed immediately once it was created.
 
 ## Events
 
