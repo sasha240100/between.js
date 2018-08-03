@@ -4,8 +4,10 @@
 
 > Lightweight JavaScript (ES6) tweening library.
 
-![](https://travis-ci.org/sasha240100/between.js.svg?branch=master)
-![](https://img.shields.io/npm/v/between.js.svg)
+[![](https://travis-ci.org/sasha240100/between.js.svg?branch=master)](https://travis-ci.org/sasha240100/between.js)
+[![](https://img.shields.io/npm/v/between.js.svg)](https://www.npmjs.com/package/between.js)
+
+[![NPM](https://nodei.co/npm/between.js.png)](https://nodei.co/npm/between.js/)
 
 **EXAMPLES**
 * [Examples collection](http://between.js.org/)
