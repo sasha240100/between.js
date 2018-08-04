@@ -28,11 +28,11 @@
 
 Make tweening usage convenient and powerful. There are certain things that we were following while developed this library, we wanted to make it:
 
-- The most **lightweight** :snowflake: JS Tweening library.
+- **Lightweight** :snowflake: JS Tweening library.
  > The library is only `8.3 Kb (3Kb gzip)`
-- The most **performant** :zap: JS Tweening library. 
+- **Performant** :zap: JS Tweening library. 
  > It uses optimization patterns to speed up & smooth animation.
-- The most **modern** :gem: JS Tweening library
+- **Modern** :gem: JS Tweening library
  > The library is written in `ES6`, compiled to ES5 for global browsers support and provides `ES6 API`.
 
 ## Install with npm 
