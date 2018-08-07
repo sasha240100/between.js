@@ -15,9 +15,10 @@ const _requestAnimationFrame = ( // polyfill
   || raf
 );
 
-let _prevTime = Date.now(), _time, _delta;
+let _prevTime = Date.now(), _time, _delta, _paused;
 (function _update() {
   _requestAnimationFrame(_update);
+  if (_paused) return;
 
   _time = Date.now();
   _delta = _time - _prevTime;
@@ -126,6 +127,22 @@ export default class Between extends Events {
     }
 
     _betweens.push(this.update());
+  }
+
+  pause() {
+    this.emit('pause', this.value, this, _delta);
+    _paused = true;
+  }
+
+  isPaused() {
+    return _paused;
+  }
+
+  start() {
+    this.emit('start', this.value, this, _delta);
+    _paused = false;
+    _delta = 0;
+    _prevTime = Date.now();
   }
 
   easing(easing) {
