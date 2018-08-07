@@ -14,15 +14,13 @@
 
 **DOCUMENTATION**
 
-* [Purpose](#purpose)
-* [Installation](#install-with-npm)
-* [Basic usage](#basic-usage)
-* [Events](#events)
-* [Different values](#different-values)
-* [Looping](#looping)
-* [Easing](#easing)
-* [Color](#color)
-* [Mixed examples](#mixed-examples)
+- [API](#api)
+    - [Events](#events)
+    - [Different values](#different-values)
+    - [Looping](#looping)
+    - [Easing](#easing)
+    - [Color](#color)
+    - [Mixed examples](#mixed-examples)
 
 ## Purpose
 
@@ -81,12 +79,18 @@ new Between(
  [Number|Object|Array] to
 )
 
-// Methods
+// Chainable Methods
   .time([Number] duration) // Set duration
   .loop([String] mode, [?Number] repeatTimes) // Set loop mode, if "repeatTimes" is falsy, treats as "endless"
   .easing([Function] easing) // Set easing function
   .on([String] eventName, [Function] callback) // Add event listener
+  .pause() // Pauses
+
+// Util Methods
+  .isPaused() // returns true if paused
 ```
+
+
 
 > There is no need to "start" the tween. It is executed immediately once it was created.
 
@@ -101,6 +105,9 @@ new Between(1, 10).time(1000)
   })
   .on('start', (value) => {
       console.log(value);
+  })
+  .on('pause', (value) => {
+      console.log(value); 
   })
   .on('complete', (value) => {
       console.log(value);
