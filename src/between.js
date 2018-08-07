@@ -130,8 +130,9 @@ export default class Between extends Events {
   }
 
   pause() {
-    this.emit('pause', this.value, this, _delta);
     _paused = true;
+    this.emit('pause', this.value, this, _delta);
+    return this;
   }
 
   isPaused() {
@@ -143,6 +144,7 @@ export default class Between extends Events {
     _paused = false;
     _delta = 0;
     _prevTime = Date.now();
+    return this;
   }
 
   easing(easing) {
