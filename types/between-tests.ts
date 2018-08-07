@@ -1,4 +1,4 @@
-import {Between as TypedBetween, Easing} from './between';
+import {Between as TypedBetween, Easing} from './Between';
 import Between from '../src/between'; // importing this thing to test passing some easing functions
 
 // Test constructor
@@ -18,6 +18,11 @@ between.easing(Between.Easing.Cubic.InOut);
 between.on('start', (value) => { value });
 between.on('update', (value) => { value });
 between.on('complete', (value) => { value });
+
+// Test pause control
+between.pause();
+between.start();
+between.isPaused();
 
 // Test chained
 between.time(1000)
