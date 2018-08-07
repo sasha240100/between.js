@@ -19,8 +19,15 @@
         </pre>
       </div>
       <div class="one-half column">
-        <h5 class="demo">Demo &nbsp;&nbsp; <span onclick="window.location.reload()"><img height="16" src="./img/replay.png"></span></h5>
-
+        <h5 class="demo">
+          Demo &nbsp;&nbsp; 
+          <span onclick="window.location.reload()">
+            <img height="16" src="./img/replay.png">
+          </span>
+          <span onclick="toggle()">
+            <img height="16" src="./img/playpause.png">
+          </span>
+        </h5>
         <hr>
         <div id="move" style="background: red; width: 20px; height: 20px;"></div>
         <h5 data-state style="padding-top: 20px;">state: started</h5>
@@ -32,17 +39,29 @@
     <script data-example-code>
       const element = document.querySelector('#move');
       const state = document.querySelector('[data-state]');
+      let between;
 
       function createTween() {
-        new Between(0, 400)
+        between = new Between(0, 400)
           .time(2000)
           .on('update', v => {
             element.style.transform = `translateX(${v}px)`;
           }).on('start', () => {
             state.innerText = 'state: running';
+          }).on('pause', () => {
+            state.innerText = 'state: paused';
           }).on('complete', () => {
             state.innerText = 'state: complete';
           });
+      }
+
+      function toggle() {
+        if (!between) return;
+        if (between.isPaused()) {
+          between.start();
+        } else {
+          between.pause();
+        }
       }
 
       window.onload = () => setTimeout(createTween, 2000);
