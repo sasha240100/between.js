@@ -13,16 +13,22 @@
 * [Examples collection](http://between.js.org/)
 
 **DOCUMENTATION**
-
+- [Purpose](#purpose)
+- [Install](#install)
+    - [With npm](#with-npm)
+    - [Or fetch from CDN](#or-fetch-from-cdn)
+- [Basic usage](#basic-usage)
+    - [Module](#module)
+    - [Or in HTML:](#or-in-html)
 - [API](#api)
-    - [Events](#events)
-    - [Different values](#different-values)
-    - [Looping](#looping)
-    - [Easing](#easing)
-    - [Color](#color)
-    - [Mixed examples](#mixed-examples)
+- [Events](#events)
+- [Different values](#different-values)
+- [Looping](#looping)
+- [Easing](#easing)
+- [Color](#color)
+- [Mixed examples](#mixed-examples)
 
-## Purpose
+# Purpose
 
 Make tweening usage convenient and powerful. There are certain things that we were following while developed this library, we wanted to make it:
 
@@ -33,7 +39,8 @@ Make tweening usage convenient and powerful. There are certain things that we we
 - **Modern** :gem: JS Tweening library
  > The library is written in `ES6`, compiled to ES5 for global browsers support and provides `ES6 API`.
 
-## Install with npm 
+# Install 
+## With npm 
 
 ```
 $ npm install between.js
@@ -45,8 +52,8 @@ $ npm install between.js
 <script src="https://rawgit.com/sasha240100/between.js/master/build/between.js"></script>
 ```
 
-## Basic usage
-
+# Basic usage
+## Module
 ```javascript
 import Between from 'between.js';
 
@@ -57,8 +64,7 @@ new Between(1, 10).time(1000)
   });
 ```
 
-
-Or in HTML:
+## Or in HTML:
 
 ```html
 <script src="./path/to/between.js"></script>
@@ -94,7 +100,7 @@ new Between(
 
 > There is no need to "start" the tween. It is executed immediately once it was created.
 
-## Events
+# Events
 
 ```javascript
 import Between from 'between.js';
@@ -114,7 +120,7 @@ new Between(1, 10).time(1000)
   });
 ```
 
-## Different values
+# Different values
 
 * Numbers
 * Arrays
@@ -159,7 +165,7 @@ new Between({x: 2, y: 3, z: 4}, {x: 4, y: 6, z: 10}).time(1000)
 
 [Example](http://between.js.org/objects.html)
 
-## Looping
+# Looping
 
 Repeat `N` times
 
@@ -205,7 +211,7 @@ new Between(1, 10).time(4000)
 
 [Example](http://between.js.org/loop-bounce.html)
 
-## Easing
+# Easing
 
 ```javascript
 import Between from 'between.js';
@@ -226,7 +232,7 @@ new Between(1, 10).time(4000)
 
 [easing-functions npm](https://www.npmjs.com/package/easing-functions) 
 
-## Color
+# Color
 
 Color types:
 
@@ -256,7 +262,7 @@ Or in HTML:
 <script src="./path/to/dom-color.between.js"></script>
 ```
 
-## Mixed examples
+# Mixed examples
 
 ```javascript
 import Between from 'between.js';
