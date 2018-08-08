@@ -91,6 +91,7 @@ new Between(
   .easing([Function] easing) // Set easing function
   .on([String] eventName, [Function] callback) // Add event listener
   .pause() // Pauses
+  .play() // Resumes
 
 // Getters
   .isPaused // returns true if paused
@@ -114,6 +115,9 @@ new Between(1, 10).time(1000)
   })
   .on('pause', (value) => {
       console.log(value); 
+  })
+  .on('play', (value) => {
+      console.log(value);
   })
   .on('complete', (value) => {
       console.log(value);

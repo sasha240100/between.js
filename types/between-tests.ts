@@ -21,7 +21,7 @@ between.on('complete', (value) => { value });
 
 // Test pause control
 between.pause();
-between.start();
+between.play();
 between.isPaused; 
 
 // Test chained

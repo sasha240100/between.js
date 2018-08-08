@@ -140,9 +140,9 @@ export default class Between extends Events {
     return this[SYMBOL_PAUSED];
   }
 
-  start() {
+  play() {
     this[SYMBOL_PAUSED] = false;
-    this.emit('start', this.value, this, _delta);
+    this.emit('play', this.value, this, _delta);
     return this;
   }
 

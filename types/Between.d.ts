@@ -432,10 +432,10 @@ export class Between {
   /**
    * Starts (if was paused)
    */
-  start(): this;
+  play(): this;
 
   /**
    * Returns `true` if paused
    */
-  isPaused(): boolean;
+  isPaused: boolean;
 }

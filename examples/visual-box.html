@@ -50,6 +50,8 @@
             state.innerText = 'state: running';
           }).on('pause', () => {
             state.innerText = 'state: paused';
+          }).on('play', () => {
+            state.innerText = 'state: running';
           }).on('complete', () => {
             state.innerText = 'state: complete';
           });
@@ -58,7 +60,7 @@
       function toggle() {
         if (!between) return;
         if (between.isPaused) {
-          between.start();
+          between.play();
         } else {
           between.pause();
         }
