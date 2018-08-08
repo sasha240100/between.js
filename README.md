@@ -85,15 +85,15 @@ new Between(
  [Number|Object|Array] to
 )
 
-// Chainable Methods
+// Methods
   .time([Number] duration) // Set duration
   .loop([String] mode, [?Number] repeatTimes) // Set loop mode, if "repeatTimes" is falsy, treats as "endless"
   .easing([Function] easing) // Set easing function
   .on([String] eventName, [Function] callback) // Add event listener
   .pause() // Pauses
 
-// Util Methods
-  .isPaused() // returns true if paused
+// Getters
+  .isPaused // returns true if paused
 ```
 
 

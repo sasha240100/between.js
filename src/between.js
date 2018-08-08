@@ -9,16 +9,16 @@ const _betweens = [];
 const SYMBOL_TYPE = Symbol('type');
 const SYMBOL_START_TIME = Symbol('start_time');
 const SYMBOL_COMPLETED = Symbol('completed');
+const SYMBOL_PAUSED = Symbol('paused');
 
 const _requestAnimationFrame = ( // polyfill
   requestAnimationFrame
   || raf
 );
 
-let _prevTime = Date.now(), _time, _delta, _paused;
+let _prevTime = Date.now(), _time, _delta;
 (function _update() {
   _requestAnimationFrame(_update);
-  if (_paused) return;
 
   _time = Date.now();
   _delta = _time - _prevTime;
@@ -74,7 +74,8 @@ export default class Between extends Events {
         ),
       [SYMBOL_COMPLETED]: false,
       [SYMBOL_TYPE]: type,
-      [SYMBOL_START_TIME]: Date.now()
+      [SYMBOL_START_TIME]: Date.now(),
+      [SYMBOL_PAUSED]: false
     });
 
     switch (this[SYMBOL_TYPE]) {
@@ -130,20 +131,18 @@ export default class Between extends Events {
   }
 
   pause() {
-    _paused = true;
+    this[SYMBOL_PAUSED] = true;
     this.emit('pause', this.value, this, _delta);
     return this;
   }
 
-  isPaused() {
-    return _paused;
+  get isPaused() {
+    return this[SYMBOL_PAUSED];
   }
 
   start() {
+    this[SYMBOL_PAUSED] = false;
     this.emit('start', this.value, this, _delta);
-    _paused = false;
-    _delta = 0;
-    _prevTime = Date.now();
     return this;
   }
 
@@ -206,6 +205,9 @@ export default class Between extends Events {
     const {_updateValue} = this;
 
     return (delta, time) => {
+      if (this[SYMBOL_PAUSED])
+        return;
+
       if (this.localTime === 0)
         this.emit('start', this.value, this);
 

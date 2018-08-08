@@ -22,7 +22,7 @@ between.on('complete', (value) => { value });
 // Test pause control
 between.pause();
 between.start();
-between.isPaused();
+between.isPaused; 
 
 // Test chained
 between.time(1000)
