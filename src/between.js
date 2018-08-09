@@ -9,6 +9,7 @@ const _betweens = [];
 const SYMBOL_TYPE = Symbol('type');
 const SYMBOL_START_TIME = Symbol('start_time');
 const SYMBOL_COMPLETED = Symbol('completed');
+const SYMBOL_PAUSED = Symbol('paused');
 
 const _requestAnimationFrame = ( // polyfill
   requestAnimationFrame
@@ -73,7 +74,8 @@ export default class Between extends Events {
         ),
       [SYMBOL_COMPLETED]: false,
       [SYMBOL_TYPE]: type,
-      [SYMBOL_START_TIME]: Date.now()
+      [SYMBOL_START_TIME]: Date.now(),
+      [SYMBOL_PAUSED]: false
     });
 
     switch (this[SYMBOL_TYPE]) {
@@ -126,6 +128,22 @@ export default class Between extends Events {
     }
 
     _betweens.push(this.update());
+  }
+
+  pause() {
+    this[SYMBOL_PAUSED] = true;
+    this.emit('pause', this.value, this, _delta);
+    return this;
+  }
+
+  get isPaused() {
+    return this[SYMBOL_PAUSED];
+  }
+
+  play() {
+    this[SYMBOL_PAUSED] = false;
+    this.emit('play', this.value, this, _delta);
+    return this;
   }
 
   easing(easing) {
@@ -187,6 +205,9 @@ export default class Between extends Events {
     const {_updateValue} = this;
 
     return (delta, time) => {
+      if (this[SYMBOL_PAUSED])
+        return;
+
       if (this.localTime === 0)
         this.emit('start', this.value, this);
 

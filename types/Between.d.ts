@@ -423,4 +423,19 @@ export class Between {
    * @param callback 
    */
   on(eventName: EventEmmit, callback: Function): this;
+
+  /**
+   * Pauses
+   */
+  pause(): this;
+
+  /**
+   * Starts (if was paused)
+   */
+  play(): this;
+
+  /**
+   * Returns `true` if paused
+   */
+  isPaused: boolean;
 }
