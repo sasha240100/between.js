@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Visual Easing InOut</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
     <link rel="stylesheet" href="./css/atom-one-light.css">
@@ -22,29 +22,29 @@
         <h5 class="demo">Demo &nbsp;&nbsp; <span onclick="window.location.reload()"><img height="16" src="./img/replay.png"></span></h5>
 
         <hr>
-        <h5 data-value>value: 0</h5>
-        <h5 data-state>state: started</h5>
+        <div id="cubic" style="background: red; width: 20px; height: 20px;"></div>
+        <h5 data-state style="padding-top: 20px;">state: started</h5>
       </div>
     </div>
 
     <script src="../build/between.js" charset="utf-8"></script>
     <script data-example-code>
-      const value = document.querySelector('[data-value]');
+      const element = document.querySelector('#cubic');
       const state = document.querySelector('[data-state]');
 
       function createTween() {
-        new Between(1, 10)
-          .time(1000)
-          .on('update', v => {
-            value.innerText = `value: ${v.toFixed(2)}`;
-          }).on('start', () => {
-            state.innerText = 'state: running';
-          }).on('complete', () => {
-            state.innerText = 'state: complete';
-          });
-      }
+        new Between(1, 400).time(5000).easing(Between.Easing.Cubic.InOut)
+        .on('update', v => {
+          element.style.transform = `translateX(${v}px)`;
+        }).on('start', () => {
+          state.innerText = 'state: running';
+        }).on('complete', () => {
+          state.innerText = 'state: complete';
+        });
+      };
 
       window.onload = () => setTimeout(createTween, 2000);
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" charset="utf-8"></script>
     <script src="./js/script.js" charset="utf-8"></script>

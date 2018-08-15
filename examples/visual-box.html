@@ -19,8 +19,15 @@
         </pre>
       </div>
       <div class="one-half column">
-        <h5 class="demo">Demo &nbsp;&nbsp; <span onclick="window.location.reload()"><img height="16" src="./img/replay.png"></span></h5>
-
+        <h5 class="demo">
+          Demo &nbsp;&nbsp;
+          <span onclick="window.location.reload()">
+            <img height="16" src="./img/replay.png">
+          </span>
+          <span onclick="toggle()">
+            <img height="16" src="./img/playpause.png">
+          </span>
+        </h5>
         <hr>
         <div id="move" style="background: red; width: 20px; height: 20px;"></div>
         <h5 data-state style="padding-top: 20px;">state: started</h5>
@@ -28,21 +35,37 @@
     </div>
 
     <script src="../build/between.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.2.0/Tween.min.js" charset="utf-8"></script>
     <script data-example-code>
       const element = document.querySelector('#move');
       const state = document.querySelector('[data-state]');
+      let between;
 
-      window.onload = () => setTimeout(() => { // Wait for page loading
-        new Between(0, 400).time(2000).on('update', v => {
-          element.style.transform = `translateX(${v}px)`;
-        }).on('start', () => {
-          state.innerText = 'state: running';
-        }).on('complete', () => {
-          state.innerText = 'state: complete';
-        });
-      }, 2000);
+      function createTween() {
+        between = new Between(0, 400)
+          .time(2000)
+          .on('update', v => {
+            element.style.transform = `translateX(${v}px)`;
+          }).on('start', () => {
+            state.innerText = 'state: running';
+          }).on('pause', () => {
+            state.innerText = 'state: paused';
+          }).on('play', () => {
+            state.innerText = 'state: running';
+          }).on('complete', () => {
+            state.innerText = 'state: complete';
+          });
+      }
 
+      function toggle() {
+        if (!between) return;
+        if (between.isPaused) {
+          between.play();
+        } else {
+          between.pause();
+        }
+      }
+
+      window.onload = () => setTimeout(createTween, 2000);
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" charset="utf-8"></script>
     <script src="./js/script.js" charset="utf-8"></script>

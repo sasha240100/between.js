@@ -22,7 +22,7 @@
         <h5 class="demo">Demo &nbsp;&nbsp; <span onclick="window.location.reload()"><img height="16" src="./img/replay.png"></span></h5>
 
         <hr>
-        <h5 data-value>value: 1, 5</h5>
+        <h5 data-value>value: &nbsp;&nbsp; [1, &nbsp;&nbsp;5]</h5>
         <h5 data-state>state: started</h5>
         <h5 data-time>localTime[ms]: 0</h5>
       </div>
@@ -34,14 +34,21 @@
       const state = document.querySelector('[data-state]');
       const time = document.querySelector('[data-time]');
 
-      const a = new Between([1, 5], [10, 10]).time(5000).on('update', (v, {localTime}) => {
-        value.innerHTML = `value: &nbsp;&nbsp; [${v.map(a => a.toFixed(2)).join(',&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')}]`;
-        time.innerText = `localTime[ms]: ${localTime}`;
-      }).on('start', () => {
-        state.innerText = 'state: running';
-      }).on('complete', () => {
-        state.innerText = 'state: complete';
-      });
+      function createTween() {
+        new Between([1, 5], [10, 10])
+          .time(5000)
+          .on('update', (v, {localTime}) => {
+            value.innerHTML =
+              `value: &nbsp;&nbsp; [${v.map(a => a.toFixed(2)).join(',&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')}]`;
+            time.innerText = `localTime[ms]: ${localTime}`;
+          }).on('start', () => {
+            state.innerText = 'state: running';
+          }).on('complete', () => {
+            state.innerText = 'state: complete';
+          });
+      }
+
+      window.onload = () => setTimeout(createTween, 2000);
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" charset="utf-8"></script>
     <script src="./js/script.js" charset="utf-8"></script>

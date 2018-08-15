@@ -37,7 +37,7 @@ export default [
         serve({
           open: true,
           contentBase: ['./', './examples'],
-          port: 8080
+          port: 3000
         })
       ])
     ]

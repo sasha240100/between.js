@@ -4,43 +4,56 @@
 
 > Lightweight JavaScript (ES6) tweening library.
 
-![](https://travis-ci.org/sasha240100/between.js.svg?branch=master)
-![](https://img.shields.io/npm/v/between.js.svg)
+[![](https://travis-ci.org/sasha240100/between.js.svg?branch=master)](https://travis-ci.org/sasha240100/between.js)
+[![](https://img.shields.io/npm/v/between.js.svg)](https://www.npmjs.com/package/between.js)
+
+[![NPM](https://nodei.co/npm/between.js.png)](https://nodei.co/npm/between.js/)
 
 **EXAMPLES**
-* [Examples collection](http://betweenjs.surge.sh/)
+* [Examples collection](http://between.js.org/)
 
 **DOCUMENTATION**
+- [Purpose](#purpose)
+- [Install](#install)
+    - [With npm](#with-npm)
+    - [Or fetch from CDN](#or-fetch-from-cdn)
+- [Basic usage](#basic-usage)
+    - [Module](#module)
+    - [Or in HTML:](#or-in-html)
+- [API](#api)
+- [Events](#events)
+- [Different values](#different-values)
+- [Looping](#looping)
+- [Easing](#easing)
+- [Color](#color)
+- [Mixed examples](#mixed-examples)
 
-* [Purpose](#purpose)
-* [Installation](#install-with-npm)
-* [Basic usage](#basic-usage)
-* [Events](#events)
-* [Different values](#different-values)
-* [Looping](#looping)
-* [Easing](#easing)
-* [Color](#color)
-* [Mixed examples](#mixed-examples)
-
-## Purpose
+# Purpose
 
 Make tweening usage convenient and powerful. There are certain things that we were following while developed this library, we wanted to make it:
 
-- The most **lightweight** :snowflake: JS Tweening library.
- > The library is only `8.3 Kb`
-- The most **performant** :zap: JS Tweening library. 
+- **Lightweight** :snowflake: JS Tweening library.
+ > The library is only `8.3 Kb (3Kb gzip)`
+- **Performant** :zap: JS Tweening library. 
  > It uses optimization patterns to speed up & smooth animation.
-- The most **modern** :gem: JS Tweening library
+- **Modern** :gem: JS Tweening library
  > The library is written in `ES6`, compiled to ES5 for global browsers support and provides `ES6 API`.
 
-## Install with npm 
+# Install 
+## With npm 
 
 ```
 $ npm install between.js
 ```
 
-## Basic usage
+## Or fetch from CDN
 
+```
+<script src="https://rawgit.com/sasha240100/between.js/master/build/between.js"></script>
+```
+
+# Basic usage
+## Module
 ```javascript
 import Between from 'between.js';
 
@@ -51,8 +64,7 @@ new Between(1, 10).time(1000)
   });
 ```
 
-
-Or in HTML:
+## Or in HTML:
 
 ```html
 <script src="./path/to/between.js"></script>
@@ -78,11 +90,18 @@ new Between(
   .loop([String] mode, [?Number] repeatTimes) // Set loop mode, if "repeatTimes" is falsy, treats as "endless"
   .easing([Function] easing) // Set easing function
   .on([String] eventName, [Function] callback) // Add event listener
+  .pause() // Pauses
+  .play() // Resumes
+
+// Getters
+  .isPaused // returns true if paused
 ```
+
+
 
 > There is no need to "start" the tween. It is executed immediately once it was created.
 
-## Events
+# Events
 
 ```javascript
 import Between from 'between.js';
@@ -94,12 +113,18 @@ new Between(1, 10).time(1000)
   .on('start', (value) => {
       console.log(value);
   })
+  .on('pause', (value) => {
+      console.log(value); 
+  })
+  .on('play', (value) => {
+      console.log(value);
+  })
   .on('complete', (value) => {
       console.log(value);
   });
 ```
 
-## Different values
+# Different values
 
 * Numbers
 * Arrays
@@ -116,7 +141,7 @@ new Between(1, 10).time(1000)
   });
 ```
 
-[Example](http://betweenjs.surge.sh/basic.html)
+[Example](http://between.js.org/basic.html)
 
 **Arrays**
 
@@ -129,7 +154,7 @@ new Between([1, 5], [10, 10]).time(1000)
    });
 ```
 
-[Example](http://betweenjs.surge.sh/arrays.html)
+[Example](http://between.js.org/arrays.html)
 
 **Objects**
 
@@ -142,9 +167,9 @@ new Between({x: 2, y: 3, z: 4}, {x: 4, y: 6, z: 10}).time(1000)
   });
 ```
 
-[Example](http://betweenjs.surge.sh/objects.html)
+[Example](http://between.js.org/objects.html)
 
-## Looping
+# Looping
 
 Repeat `N` times
 
@@ -159,7 +184,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
-[Example](http://betweenjs.surge.sh/loop-repeat.html)
+[Example](http://between.js.org/loop-repeat.html)
 
 Repeat endless
 
@@ -173,7 +198,7 @@ new Between(1, 10).time(4000)
   });
 ```
 
-[Example](http://betweenjs.surge.sh/loop-repeat.html)
+[Example](http://between.js.org/loop-repeat.html)
 
 Bounce `N` times
 
@@ -188,9 +213,9 @@ new Between(1, 10).time(4000)
   });
 ```
 
-[Example](http://betweenjs.surge.sh/loop-bounce.html)
+[Example](http://between.js.org/loop-bounce.html)
 
-## Easing
+# Easing
 
 ```javascript
 import Between from 'between.js';
@@ -205,13 +230,13 @@ new Between(1, 10).time(4000)
   });
 ```
 
-[Example](http://betweenjs.surge.sh/easing.html)
+[Example](http://between.js.org/easing.html)
 
 <img src=".gitbook/assets/screen-shot-2018-07-29-at-13.25.52.png" height="400">
 
 [easing-functions npm](https://www.npmjs.com/package/easing-functions) 
 
-## Color
+# Color
 
 Color types:
 
@@ -232,7 +257,7 @@ new Between('red', 'rgb(255,40,30)').time(4000)
   });
 ```
 
-[Example](http://betweenjs.surge.sh/color-plugin.html)
+[Example](http://between.js.org/color-plugin.html)
 
 Or in HTML:
 
@@ -241,7 +266,7 @@ Or in HTML:
 <script src="./path/to/dom-color.between.js"></script>
 ```
 
-## Mixed examples
+# Mixed examples
 
 ```javascript
 import Between from 'between.js';
