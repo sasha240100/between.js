@@ -26,12 +26,10 @@ export default [
         uglify({
           output: {
             comments(node, comment) {
-              const text = comment.value;
-              const type = comment.type;
+              const {type, value} = comment;
 
-              if (type == "comment2") {
-                  return /Between\.js/i.test(text);
-              }
+              if (type === 'comment2')
+                return /Between\.js/i.test(value);
             }
           }
         })

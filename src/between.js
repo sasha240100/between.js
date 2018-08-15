@@ -187,6 +187,8 @@ export default class Between extends Events {
     const {_updateValue} = this;
 
     return (delta, time) => {
+      if (this[SYMBOL_COMPLETED]) return;
+
       if (this.localTime === 0)
         this.emit('start', this.value, this);
 
