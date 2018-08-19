@@ -5,6 +5,17 @@ import Between from '../src/between';
 
 Between._plugins.color = require('../plugins/dom-color').default;
 
+test.cb('is working with non-strings', t => {
+  t.plan(1);
+
+  new Between(1, 10)
+    .time(1000)
+    .on('complete', () => {
+      t.pass();
+      t.end();
+    });
+});
+
 test.cb('is color plugin converts from rgb to rgb', t => {
   t.plan(1);
 

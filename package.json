@@ -1,6 +1,6 @@
 {
   "name": "between.js",
-  "version": "0.1.2",
+  "version": "0.1.2-fix.1",
   "description": "Lightweight ES6 JavaScript tweening engine",
   "main": "./build/between.js",
   "scripts": {
