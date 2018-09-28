@@ -6,6 +6,8 @@
 
 [![](https://travis-ci.org/sasha240100/between.js.svg?branch=master)](https://travis-ci.org/sasha240100/between.js)
 [![](https://img.shields.io/npm/v/between.js.svg)](https://www.npmjs.com/package/between.js)
+[![](https://img.shields.io/github/license/sasha240100/between.js.svg)](https://github.com/sasha240100/between.js/blob/master/LICENSE)
+
 
 [![NPM](https://nodei.co/npm/between.js.png)](https://nodei.co/npm/between.js/)
 
