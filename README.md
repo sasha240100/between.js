@@ -6,6 +6,7 @@
 
 [![](https://travis-ci.org/sasha240100/between.js.svg?branch=master)](https://travis-ci.org/sasha240100/between.js)
 [![](https://img.shields.io/npm/v/between.js.svg)](https://www.npmjs.com/package/between.js)
+[![](https://img.shields.io/github/size/sasha240100/between.js/build/between.js.svg)](https://github.com/sasha240100/between.js/blob/master/build/between.js)
 [![](https://img.shields.io/github/license/sasha240100/between.js.svg)](https://github.com/sasha240100/between.js/blob/master/LICENSE)
 
 
@@ -35,7 +36,7 @@
 Make tweening usage convenient and powerful. There are certain things that we were following while developed this library, we wanted to make it:
 
 - **Lightweight** :snowflake: JS Tweening library.
- > The library is only `8.3 Kb (3Kb gzip)`
+ > The library is only `9.08 Kb (3Kb gzip)`
 - **Performant** :zap: JS Tweening library. 
  > It uses optimization patterns to speed up & smooth animation.
 - **Modern** :gem: JS Tweening library
