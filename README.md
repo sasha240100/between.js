@@ -52,7 +52,7 @@ $ npm install between.js
 ## Or fetch from CDN
 
 ```
-<script src="https://rawgit.com/sasha240100/between.js/master/build/between.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/between.js/build/between.js"></script>
 ```
 
 # Basic usage
