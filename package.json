@@ -42,7 +42,7 @@
     "gulp": "^3.9.1",
     "gulp-sass": "^4.0.1",
     "node-sass": "^4.9.0",
-    "nyc": "^11.8.0",
+    "nyc": "^15.1.0",
     "once": "^1.4.0",
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^4.0.0-beta.4",
